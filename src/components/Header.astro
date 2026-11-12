@@ -31,7 +31,7 @@ const links = [
     <a
       href={`#${a.top}`}
       aria-label={t.homeLabel}
-      class="flex items-center gap-2.5 text-salt no-underline"
+      class="flex min-h-11 min-w-11 items-center gap-2.5 text-salt no-underline"
     >
       <svg
         width="30"
@@ -56,15 +56,15 @@ const links = [
 
     <nav
       aria-label={t.navLabel}
-      class="order-last basis-full md:order-none md:ml-auto md:basis-auto"
+      class="order-last min-w-0 basis-full md:order-none md:ml-auto md:basis-auto"
     >
-      <ul class="-mx-1 flex items-center gap-5 overflow-x-auto whitespace-nowrap text-[15px] font-medium md:gap-6 md:overflow-visible">
+      <ul class="-mx-1 flex items-center justify-between gap-x-1 overflow-x-auto whitespace-nowrap text-sm font-medium sm:justify-start sm:gap-x-5 sm:text-[15px] md:gap-x-6 md:overflow-visible">
         {
           links.map((l) => (
             <li>
               <a
                 href={l.href}
-                class="inline-flex min-h-11 items-center px-1 text-muted-dark no-underline transition-colors hover:text-salt"
+                class="inline-flex min-h-11 min-w-11 items-center justify-center px-1 text-muted-dark no-underline transition-colors hover:text-salt"
               >
                 {l.label}
               </a>
