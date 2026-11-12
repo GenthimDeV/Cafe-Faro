@@ -1,0 +1,84 @@
+---
+// Torre del faro (SVG 200x460) con roca, estilo plano sin sombras.
+// La lámpara está en (100, 58) y ancla el haz. El padre aporta el posicionamiento
+// (p. ej. `absolute bottom-… left-…`): aquí no se fija `position` para no pisarlo.
+import Beam from './Beam.astro';
+
+interface Props {
+  idp?: string;
+  flip?: boolean;
+  class?: string;
+}
+const { idp = 'lt', flip = false, class: className = '' } = Astro.props;
+---
+
+<div
+  aria-hidden="true"
+  class:list={['h-[460px] w-[200px] origin-bottom', className]}
+>
+  <svg
+    width="200"
+    height="460"
+    viewBox="0 0 200 460"
+    class="absolute inset-0"
+    fill="none"
+  >
+    <defs>
+      <radialGradient id={`${idp}-glow`}>
+        <stop offset="0" stop-color="#F2A93B" stop-opacity="0.85"></stop>
+        <stop offset="0.45" stop-color="#F2A93B" stop-opacity="0.28"></stop>
+        <stop offset="1" stop-color="#F2A93B" stop-opacity="0"></stop>
+      </radialGradient>
+      <clipPath id={`${idp}-body`}>
+        <polygon points="78,92 122,92 134,384 66,384"></polygon>
+      </clipPath>
+    </defs>
+
+    <!-- roca -->
+    <path
+      d="M0 460 L18 430 L40 410 L58 396 L142 396 L164 412 L184 432 L200 460 Z"
+      fill="#1C3349"></path>
+
+    <!-- base y cuerpo -->
+    <rect x="58" y="384" width="84" height="12" rx="2" fill="#2E4559"></rect>
+    <g clip-path={`url(#${idp}-body)`}>
+      <rect x="60" y="92" width="80" height="292" fill="#F1F3F2"></rect>
+      <rect x="60" y="164" width="80" height="72" fill="#B5401C"></rect>
+      <rect x="60" y="308" width="80" height="76" fill="#B5401C"></rect>
+    </g>
+    <!-- ventanas y puerta -->
+    <rect x="95" y="118" width="10" height="20" rx="5" fill="#10263A"></rect>
+    <rect x="95" y="258" width="10" height="20" rx="5" fill="#10263A"></rect>
+    <rect x="93" y="340" width="14" height="44" rx="7" fill="#10263A"></rect>
+
+    <!-- galería con barandilla -->
+    <rect x="62" y="84" width="76" height="8" rx="1" fill="#F1F3F2"></rect>
+    <path
+      d="M64 84 V72 M76 84 V72 M88 84 V72 M100 84 V72 M112 84 V72 M124 84 V72 M136 84 V72 M64 72 H136"
+      stroke="#F1F3F2"
+      stroke-width="2"></path>
+
+    <!-- linterna -->
+    <rect
+      x="76"
+      y="36"
+      width="48"
+      height="40"
+      fill="#10263A"
+      stroke="#F1F3F2"
+      stroke-width="3"></rect>
+    <path d="M100 38 V74" stroke="#F1F3F2" stroke-width="2"></path>
+    <circle class="lamp" cx="100" cy="58" r="46" fill={`url(#${idp}-glow)`}
+    ></circle>
+    <circle class="lamp" cx="100" cy="58" r="11" fill="#F2A93B"></circle>
+    <circle cx="100" cy="58" r="5" fill="#FFE2A8"></circle>
+
+    <!-- tejado -->
+    <path d="M70 36 H130 L100 10 Z" fill="#F1F3F2"></path>
+    <path d="M100 10 V2" stroke="#F1F3F2" stroke-width="2"></path>
+    <circle cx="100" cy="3" r="3" fill="#F2A93B"></circle>
+  </svg>
+  <div class="absolute left-[100px] top-[58px]">
+    <Beam flip={flip} />
+  </div>
+</div>

@@ -1,0 +1,124 @@
+---
+// Escena decorativa del hero (solo CSS/SVG, estilo plano).
+// Móvil: 260 px de alto, torre a escala 0.44. Escritorio: 620 px, escala 1.
+import LighthouseTower from './LighthouseTower.astro';
+
+// Estrellas: [x %, y %, tamaño px, retardo s]
+const stars: [number, number, number, number][] = [
+  [8, 10, 2, 0],
+  [18, 26, 1.5, 1.2],
+  [27, 8, 2, 2.4],
+  [36, 34, 1.5, 0.6],
+  [44, 14, 2.5, 3],
+  [60, 6, 1.5, 1.8],
+  [67, 30, 2, 0.3],
+  [75, 14, 1.5, 2.7],
+  [84, 32, 2, 1.5],
+  [95, 40, 1.5, 0.9],
+  [12, 44, 1.5, 2.1],
+  [50, 46, 1.5, 3.3],
+  [80, 48, 1.5, 0.4],
+];
+
+// Destellos ✦: [x %, y %, tamaño px, retardo s, color]
+const sparkles: [number, number, number, number, string][] = [
+  [22, 16, 12, 0.5, 'var(--color-beam)'],
+  [70, 20, 9, 2.2, 'var(--color-salt)'],
+  [38, 52, 8, 3.6, 'var(--color-salt)'],
+];
+---
+
+<div
+  aria-hidden="true"
+  class="relative h-[260px] min-w-0 flex-[1_1_460px] border-t border-line-dark lg:h-[620px] lg:border-t-0"
+>
+  <!-- estrellas -->
+  {
+    stars.map(([x, y, size, delay]) => (
+      <span
+        class="twinkle"
+        style={`left:${x}%;top:${y}%;width:${size}px;height:${size}px;animation-delay:${delay}s`}
+      />
+    ))
+  }
+  {
+    sparkles.map(([x, y, size, delay, color]) => (
+      <svg
+        class="sparkle"
+        viewBox="0 0 10 10"
+        width={size}
+        height={size}
+        style={`left:${x}%;top:${y}%;animation-delay:${delay}s;fill:${color}`}
+      >
+        <path d="M5 0 L6 4 L10 5 L6 6 L5 10 L4 6 L0 5 L4 4 Z" />
+      </svg>
+    ))
+  }
+
+  <!-- luna -->
+  <div
+    class="absolute right-[8%] top-6 size-10 rounded-full bg-deep lg:top-10 lg:size-16"
+  >
+    <span class="absolute left-[55%] top-[30%] size-[18%] rounded-full bg-night/30"></span>
+    <span class="absolute left-[28%] top-[58%] size-[14%] rounded-full bg-night/30"></span>
+  </div>
+
+  <!-- gaviotas -->
+  <svg
+    class="gull left-[20%] top-[30%] w-4 lg:w-6"
+    viewBox="0 0 16 6"
+    fill="none"
+    stroke="#C4CFD8"
+    stroke-width="1.4"
+    stroke-linecap="round"
+  >
+    <path d="M1 5 Q4.5 0 8 4 Q11.5 0 15 5"></path>
+  </svg>
+  <svg
+    class="gull left-[28%] top-[38%] w-3 lg:w-4"
+    style="animation-delay:-6s"
+    viewBox="0 0 16 6"
+    fill="none"
+    stroke="#C4CFD8"
+    stroke-width="1.6"
+    stroke-linecap="round"
+  >
+    <path d="M1 5 Q4.5 0 8 4 Q11.5 0 15 5"></path>
+  </svg>
+
+  <!-- mar: llega al borde derecho de la sección (que recorta); en escritorio
+       se funde por la izquierda para no cortar en seco junto al texto -->
+  <div
+    class="absolute -left-6 -right-[50vw] bottom-0 h-[60px] overflow-hidden border-t border-line-dark lg:left-0 lg:h-[120px] lg:[mask-image:linear-gradient(90deg,transparent,#000_18%)]"
+    style="background: linear-gradient(var(--color-ink), var(--color-night))"
+  >
+    <div class="wave-row top-[18%] opacity-90" style="--wave-speed: 16s"></div>
+    <div class="wave-row top-[48%] opacity-60" style="--wave-speed: 11s"></div>
+    <div class="wave-row top-[76%] opacity-40" style="--wave-speed: 8s"></div>
+  </div>
+
+  <!-- barco lejano sobre el horizonte, con luz verde -->
+  <svg
+    class="boat absolute bottom-[50px] left-[22%] w-7 lg:bottom-[104px] lg:w-11"
+    viewBox="0 0 44 36"
+    fill="none"
+  >
+    <path d="M22 2 V24" stroke="#C4CFD8" stroke-width="1.5"></path>
+    <path d="M23 4 L38 22 H23 Z" fill="#F1F3F2"></path>
+    <path d="M21 8 L8 22 H21 Z" fill="#C4CFD8"></path>
+    <path d="M3 24 H41 L35 33 H9 Z" fill="#1C3349"></path>
+    <circle class="lamp" cx="22" cy="2" r="2.2" fill="#5CC8B8"></circle>
+  </svg>
+
+  <!-- reflejos de la luz sobre el agua -->
+  <div class="pointer-events-none absolute bottom-0 left-[52%] h-[60px] w-0 lg:h-[120px]">
+    <span class="lamp absolute -left-12 bottom-[6px] h-0.5 w-24 rounded-full bg-beam/60 lg:-left-20 lg:bottom-[12px] lg:w-40"></span>
+    <span class="lamp absolute -left-8 bottom-[13px] h-0.5 w-16 rounded-full bg-beam/50 lg:-left-14 lg:bottom-[26px] lg:w-28" style="animation-delay:-1s"></span>
+  </div>
+
+  <!-- faro: la roca asienta en el mar -->
+  <LighthouseTower
+    idp="hero"
+    class="absolute bottom-[22px] left-[52%] -translate-x-1/2 scale-[0.44] lg:bottom-[40px] lg:scale-100"
+  />
+</div>

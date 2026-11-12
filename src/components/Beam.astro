@@ -1,0 +1,11 @@
+---
+// Haz de luz decorativo anclado a un punto. `flip` lo gira 180° (apunta a la izquierda).
+interface Props {
+  flip?: boolean;
+}
+const { flip = false } = Astro.props;
+---
+
+<div class="beam" aria-hidden="true" style={flip ? 'rotate: 180deg' : undefined}>
+  <div class="beam-arm"><div class="beam-light"></div></div>
+</div>

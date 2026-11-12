@@ -1,4 +1,5 @@
 ---
+import LighthouseTower from './LighthouseTower.astro';
 import type { Dictionary } from '../i18n/es';
 
 interface Props {
@@ -8,9 +9,30 @@ interface Props {
 const { t } = Astro.props;
 ---
 
-<section class="bg-night text-salt">
+<section class="relative overflow-hidden bg-night text-salt">
+  <div aria-hidden="true" class="star-dust" style="--stars-opacity: 0.14"></div>
+
+  <!-- escena: faro a la derecha, haz hacia la izquierda -->
   <div
-    class="mx-auto flex max-w-[1240px] flex-col items-center gap-8 px-6 py-[120px] text-center max-md:py-20"
+    aria-hidden="true"
+    class="pointer-events-none absolute inset-x-0 bottom-0 h-[170px] md:h-[300px]"
+  >
+    <div
+      class="absolute inset-x-0 bottom-0 h-8 overflow-hidden border-t border-line-dark md:h-12"
+      style="background: linear-gradient(var(--color-ink), var(--color-night))"
+    >
+      <div class="wave-row top-[20%] opacity-80" style="--wave-speed: 16s"></div>
+      <div class="wave-row top-[60%] opacity-50" style="--wave-speed: 10s"></div>
+    </div>
+    <LighthouseTower
+      idp="cta"
+      flip
+      class="absolute bottom-[14px] right-[2%] scale-[0.3] [--beam-a:0.35] md:bottom-[22px] md:right-[6%] md:scale-[0.62]"
+    />
+  </div>
+
+  <div
+    class="relative mx-auto flex max-w-[1240px] flex-col items-center gap-8 px-6 pb-[150px] pt-[120px] text-center max-md:pb-[190px] max-md:pt-20"
   >
     <h2
       class="max-w-[16ch] text-[clamp(40px,6vw,80px)] font-extrabold leading-[0.95] tracking-[-0.04em]"

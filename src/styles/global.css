@@ -69,3 +69,180 @@
     border-radius: 2px;
   }
 }
+
+/* Escena del faro (tarea 3.1): solo CSS. */
+@keyframes sweep {
+  0%,
+  100% {
+    transform: rotate(-16deg);
+  }
+  50% {
+    transform: rotate(12deg);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scale(1.15);
+  }
+}
+
+@keyframes wave-drift {
+  from {
+    background-position-x: 0;
+  }
+  to {
+    background-position-x: 120px;
+  }
+}
+
+@keyframes boat {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(3px) rotate(2deg);
+  }
+}
+
+@layer components {
+  /* Polvo de estrellas sutil; opacidad ajustable con --stars-opacity */
+  .star-dust {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(
+      rgb(241 243 242 / 0.35) 1px,
+      transparent 1.2px
+    );
+    background-size: 46px 46px;
+    opacity: var(--stars-opacity, 0.18);
+    pointer-events: none;
+  }
+
+  .twinkle {
+    position: absolute;
+    border-radius: 9999px;
+    background: var(--color-salt);
+    box-shadow: 0 0 6px 1px rgb(241 243 242 / 0.5);
+    animation: twinkle 4s ease-in-out infinite;
+  }
+
+  /* Haz: ancla puntual (.beam) -> brazo que barre 9 s (.beam-arm)
+     -> luz con cuña cónica suave que pulsa 3 s en fase con la lámpara */
+  .beam {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+  }
+  .beam-arm {
+    position: absolute;
+    left: 0;
+    top: calc(var(--beam-h, 380px) / -2);
+    width: var(--beam-len, 1100px);
+    height: var(--beam-h, 380px);
+    transform-origin: 0 50%;
+    animation: sweep 9s ease-in-out infinite;
+  }
+  .beam-light {
+    position: absolute;
+    inset: 0;
+    background: conic-gradient(
+      from 78deg at 0 50%,
+      transparent 0deg,
+      rgb(242 169 59 / calc(var(--beam-a, 0.5) * 0.4)) 4deg,
+      rgb(242 169 59 / var(--beam-a, 0.5)) 12deg,
+      rgb(242 169 59 / calc(var(--beam-a, 0.5) * 0.4)) 20deg,
+      transparent 24deg,
+      transparent 360deg
+    );
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      #000 0,
+      rgb(0 0 0 / 0.6) 30%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      90deg,
+      #000 0,
+      rgb(0 0 0 / 0.6) 30%,
+      transparent 100%
+    );
+    filter: blur(3px);
+    animation: pulse 3s ease-in-out infinite;
+  }
+
+  .lamp {
+    animation: pulse 3s ease-in-out infinite;
+  }
+
+  .wave-row {
+    position: absolute;
+    inset-inline: 0;
+    height: 12px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='12' viewBox='0 0 120 12'%3E%3Cpath d='M0 6Q30 0 60 6T120 6' fill='none' stroke='%232e4559' stroke-width='1.5'/%3E%3C/svg%3E");
+    background-repeat: repeat-x;
+    animation: wave-drift var(--wave-speed, 14s) linear infinite;
+  }
+
+  .boat {
+    animation: boat 5s ease-in-out infinite;
+  }
+
+  /* Destellos ✦ (mismo motivo que la cinta) y gaviotas: detalles planos */
+  .sparkle {
+    position: absolute;
+    animation: twinkle 5s ease-in-out infinite;
+  }
+  .gull {
+    position: absolute;
+    animation: gull 18s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes gull {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(24px, -6px);
+  }
+  100% {
+    transform: translate(48px, 2px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .beam-arm,
+  .beam-light,
+  .lamp,
+  .twinkle,
+  .wave-row,
+  .boat,
+  .sparkle,
+  .gull {
+    animation: none;
+  }
+  .beam-arm {
+    transform: rotate(-2deg);
+  }
+}
