@@ -1,0 +1,98 @@
+---
+import type { Dictionary } from '../i18n/es';
+import { plan } from '../data/plan';
+
+interface Props {
+  t: Dictionary['plan'];
+}
+
+const { t } = Astro.props;
+---
+
+<section id="plan" class="border-y border-line bg-mist">
+  <div
+    class="mx-auto flex max-w-[1240px] flex-wrap items-center gap-14 px-6 py-[120px] max-md:py-20"
+  >
+    <div class="flex min-w-0 flex-[1_1_440px] flex-col gap-[22px]">
+      <p class="font-mono text-[13px] uppercase tracking-[0.08em] text-rust">
+        {t.eyebrow}
+      </p>
+      <h2
+        class="text-[clamp(36px,4.6vw,60px)] font-extrabold leading-none tracking-[-0.035em]"
+      >
+        {t.titleBefore}<span class="font-normal italic">{t.titleAccent}</span>
+      </h2>
+      <ul class="mt-2 flex flex-col gap-4 text-[17px] leading-normal">
+        {
+          t.features.map((feature) => (
+            <li class="flex items-start gap-3.5">
+              <svg
+                width="22"
+                height="22"
+                viewBox="0 0 22 22"
+                aria-hidden="true"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="mt-0.5 flex-none text-rust"
+              >
+                <path d="M4 11l5 5 9-10" />
+              </svg>
+              {feature}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div
+      class="relative flex min-w-0 flex-[1_1_400px] flex-col gap-[26px] overflow-hidden rounded-[30px] bg-ink p-10 text-salt shadow-[0_40px_80px_rgba(16,38,58,0.25)] max-sm:p-7"
+    >
+      <div
+        aria-hidden="true"
+        class="absolute -right-[60px] -top-[60px] size-[220px] rounded-full bg-beam opacity-[0.14]"
+      >
+      </div>
+      <div class="relative flex items-center justify-between gap-3">
+        <h3 class="text-[22px] font-extrabold">{t.cardTitle}</h3>
+        <span
+          class="rounded-full bg-beam px-3 py-1.5 text-xs font-bold text-night"
+          >{t.badge}</span
+        >
+      </div>
+      <p class="relative flex items-baseline gap-2">
+        <span
+          class="font-display text-[96px] font-extrabold leading-[0.9] tracking-[-0.05em] max-sm:text-[72px]"
+          >{plan.price} {plan.currency}</span
+        >
+        <span class="text-lg text-muted-dark">{t.perMonth}</span>
+      </p>
+      <div aria-hidden="true" class="relative h-px bg-line-dark"></div>
+      <p class="relative flex justify-between text-[15px] text-muted-dark">
+        <span>{t.nextRoastLabel}</span>
+        <span class="font-mono text-salt">{t.nextRoastValue}</span>
+      </p>
+      <a
+        href="#plan"
+        class="relative inline-flex min-h-[58px] items-center justify-center gap-3 rounded-full bg-beam px-7 py-[19px] text-[17px] font-bold text-night no-underline"
+      >
+        {t.cta}
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 18 18"
+          aria-hidden="true"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.2"
+          stroke-linecap="round"
+        >
+          <path d="M3 9h12M10 4l5 5-5 5"></path>
+        </svg>
+      </a>
+      <p class="relative text-center text-[13px] text-muted-dark">{t.demo}</p>
+    </div>
+  </div>
+</section>

@@ -1,3 +1,5 @@
+import { priceLabel } from '../data/plan';
+
 export type Dictionary = {
   meta: { title: string; description: string };
   a11y: { skipToContent: string };
@@ -37,6 +39,35 @@ export type Dictionary = {
     roastLabel: string;
     transit: string;
   };
+  coffees: {
+    eyebrow: string;
+    titleBefore: string;
+    titleAccent: string;
+    text: string;
+    brand: string;
+    profile: { acidity: string; body: string; sweetness: string };
+    scale: string;
+    items: {
+      month: string;
+      name: string;
+      roast: string;
+      text: string;
+      notes: string[];
+    }[];
+  };
+  plan: {
+    eyebrow: string;
+    titleBefore: string;
+    titleAccent: string;
+    features: string[];
+    cardTitle: string;
+    badge: string;
+    perMonth: string;
+    nextRoastLabel: string;
+    nextRoastValue: string;
+    cta: string;
+    demo: string;
+  };
 };
 
 export const es: Dictionary = {
@@ -66,7 +97,7 @@ export const es: Dictionary = {
     titleAccent: 'rumbo fijo',
     titleAfter: ' a tu taza.',
     text: 'Cada mes elegimos un café de especialidad, lo tostamos en lotes pequeños y te lo enviamos en menos de 72 horas. Tú solo decides cómo prepararlo.',
-    cta: 'Suscribirme por 18 $/mes',
+    cta: `Suscribirme por ${priceLabel}/mes`,
     secondary: 'Ver cómo funciona',
   },
   about: {
@@ -119,5 +150,55 @@ export const es: Dictionary = {
     roastStages: ['CARGA', '1.er CRACK', 'SALIDA'],
     roastLabel: 'Progreso del tueste: 72 %',
     transit: 'En camino · menos de 72 h desde el tueste',
+  },
+  coffees: {
+    eyebrow: '03 — Qué cafés incluye',
+    titleBefore: 'Un origen distinto ',
+    titleAccent: 'cada mes.',
+    text: 'Rotamos entre tres regiones. Todos puntúan 84 o más en la escala SCA.',
+    brand: 'FARO',
+    profile: { acidity: 'Acidez', body: 'Cuerpo', sweetness: 'Dulzor' },
+    scale: 'de 100',
+    items: [
+      {
+        month: 'ENERO',
+        name: 'Huila, Colombia',
+        roast: 'Tueste medio',
+        text: 'Dulce y redondo. Para quien empieza en el café de especialidad.',
+        notes: ['Panela', 'Naranja', 'Cacao'],
+      },
+      {
+        month: 'FEBRERO',
+        name: 'Sidamo, Etiopía',
+        roast: 'Tueste claro',
+        text: 'Floral y brillante. Luce mejor en filtro o en V60.',
+        notes: ['Jazmín', 'Limón', 'Té negro'],
+      },
+      {
+        month: 'MARZO',
+        name: 'Cerrado, Brasil',
+        roast: 'Tueste medio-oscuro',
+        text: 'Cuerpo denso y poca acidez. Hecho para espresso y moka.',
+        notes: ['Avellana', 'Chocolate', 'Caramelo'],
+      },
+    ],
+  },
+  plan: {
+    eyebrow: '04 — El plan',
+    titleBefore: 'Un solo plan. ',
+    titleAccent: 'Sin letra pequeña.',
+    features: [
+      '250 g de café recién tostado cada mes',
+      'Ficha de cata y receta para tu método',
+      'Envío incluido en menos de 72 h',
+      'Pausa o cancela desde tu cuenta, sin coste',
+    ],
+    cardTitle: 'Suscripción Faro',
+    badge: 'Mensual',
+    perMonth: '/ mes',
+    nextRoastLabel: 'Próximo tueste',
+    nextRoastValue: '01 DIC',
+    cta: 'Suscribirme ahora',
+    demo: 'Demo: este botón no realiza cobros ni guarda datos.',
   },
 };

@@ -4,6 +4,8 @@ import Header from '../../components/Header.astro';
 import Hero from '../../components/Hero.astro';
 import About from '../../components/About.astro';
 import HowItWorks from '../../components/HowItWorks.astro';
+import Coffees from '../../components/Coffees.astro';
+import Plan from '../../components/Plan.astro';
 import { locales, useTranslations, type Locale } from '../../i18n';
 
 export function getStaticPaths() {
@@ -24,4 +26,6 @@ const t = useTranslations(lang);
   <Hero t={t.hero} />
   <About t={t.about} />
   <HowItWorks t={t.how} />
+  <Coffees t={t.coffees} />
+  <Plan t={t.plan} />
 </BaseLayout>

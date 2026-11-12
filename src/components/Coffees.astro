@@ -1,0 +1,113 @@
+---
+import type { Dictionary } from '../i18n/es';
+import { coffees } from '../data/coffees';
+
+interface Props {
+  t: Dictionary['coffees'];
+}
+
+const { t } = Astro.props;
+
+// Orden y etiquetas de las barras de perfil.
+const profileKeys = ['acidity', 'body', 'sweetness'] as const;
+---
+
+<section
+  id="cafes"
+  class="mx-auto flex max-w-[1240px] flex-col gap-14 px-6 py-[120px] max-md:py-20"
+>
+  <div class="flex flex-wrap items-end justify-between gap-6">
+    <div class="flex max-w-[640px] flex-col gap-[18px]">
+      <p class="font-mono text-[13px] uppercase tracking-[0.08em] text-rust">
+        {t.eyebrow}
+      </p>
+      <h2
+        class="text-[clamp(36px,4.6vw,60px)] font-extrabold leading-none tracking-[-0.035em]"
+      >
+        {t.titleBefore}<span class="font-normal italic">{t.titleAccent}</span>
+      </h2>
+    </div>
+    <p class="max-w-[380px] text-[17px] leading-[1.6] text-muted">{t.text}</p>
+  </div>
+
+  <ul
+    class="grid grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))] gap-6"
+  >
+    {
+      coffees.map((coffee, i) => {
+        const item = t.items[i];
+        return (
+          <li class="flex flex-col overflow-hidden rounded-[26px] border border-line bg-paper">
+            <div
+              aria-hidden="true"
+              class="relative flex h-[230px] items-end justify-center overflow-hidden"
+              style={`background-color: ${coffee.color}`}
+            >
+              <span class="absolute left-5 top-3.5 font-display text-[96px] font-extrabold leading-none tracking-[-0.05em] text-white/15">
+                {coffee.code}
+              </span>
+              <div
+                class="flex h-[180px] w-[130px] translate-y-3.5 flex-col justify-between rounded-t-[10px] bg-salt px-3.5 py-4 shadow-[0_20px_40px_rgba(0,0,0,0.25)]"
+                style={`rotate: ${coffee.tilt}deg`}
+              >
+                <span class="font-mono text-[9px] text-muted">{item.month}</span>
+                <span class="font-display text-[28px] font-extrabold leading-[0.9] text-ink">
+                  {t.brand}
+                </span>
+                <div
+                  class="h-[5px] rounded-[3px]"
+                  style={`background-color: ${coffee.color}`}
+                />
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-[18px] p-7">
+              <div class="flex items-center justify-between">
+                <span class="rounded-full bg-mist px-2.5 py-1.5 text-xs font-semibold">
+                  {item.roast}
+                </span>
+                <span class="font-mono text-[13px] font-medium">
+                  {coffee.sca} SCA
+                </span>
+              </div>
+              <h3 class="text-[30px] font-extrabold tracking-[-0.025em]">
+                {item.name}
+              </h3>
+              <p class="text-[15px] leading-[1.55] text-muted">{item.text}</p>
+
+              <dl class="grid grid-cols-[80px_1fr] items-center gap-x-3.5 gap-y-2.5 text-[13px]">
+                {profileKeys.map((key) => (
+                  <>
+                    <dt class="text-muted">{t.profile[key]}</dt>
+                    <dd class="m-0">
+                      <span class="sr-only">
+                        {coffee.profile[key]} {t.scale}
+                      </span>
+                      <span
+                        aria-hidden="true"
+                        class="block h-1.5 rounded-[3px] bg-mist"
+                      >
+                        <span
+                          class="block h-1.5 rounded-[3px] bg-ink"
+                          style={`width: ${coffee.profile[key]}%`}
+                        />
+                      </span>
+                    </dd>
+                  </>
+                ))}
+              </dl>
+
+              <ul class="flex flex-wrap gap-2 text-[13px] font-medium">
+                {item.notes.map((note) => (
+                  <li class="rounded-full border border-line px-3 py-1.5">
+                    {note}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </li>
+        );
+      })
+    }
+  </ul>
+</section>

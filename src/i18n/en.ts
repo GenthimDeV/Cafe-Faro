@@ -1,4 +1,5 @@
 import type { Dictionary } from './es';
+import { priceLabel } from '../data/plan';
 
 export const en: Dictionary = {
   meta: {
@@ -28,7 +29,7 @@ export const en: Dictionary = {
     titleAccent: 'on a steady course',
     titleAfter: ' to your cup.',
     text: 'Every month we pick a specialty coffee, roast it in small batches and ship it within 72 hours. You just decide how to brew it.',
-    cta: 'Subscribe for $18/month',
+    cta: `Subscribe for ${priceLabel}/month`,
     secondary: 'See how it works',
   },
   about: {
@@ -81,5 +82,55 @@ export const en: Dictionary = {
     roastStages: ['CHARGE', '1ST CRACK', 'DROP'],
     roastLabel: 'Roast progress: 72%',
     transit: 'On its way · under 72 h from roasting',
+  },
+  coffees: {
+    eyebrow: '03 — Which coffees are included',
+    titleBefore: 'A different origin ',
+    titleAccent: 'every month.',
+    text: 'We rotate between three regions. All of them score 84 or higher on the SCA scale.',
+    brand: 'FARO',
+    profile: { acidity: 'Acidity', body: 'Body', sweetness: 'Sweetness' },
+    scale: 'out of 100',
+    items: [
+      {
+        month: 'JANUARY',
+        name: 'Huila, Colombia',
+        roast: 'Medium roast',
+        text: 'Sweet and round. For anyone starting out in specialty coffee.',
+        notes: ['Panela', 'Orange', 'Cocoa'],
+      },
+      {
+        month: 'FEBRUARY',
+        name: 'Sidamo, Ethiopia',
+        roast: 'Light roast',
+        text: 'Floral and bright. Shines as filter or V60.',
+        notes: ['Jasmine', 'Lemon', 'Black tea'],
+      },
+      {
+        month: 'MARCH',
+        name: 'Cerrado, Brazil',
+        roast: 'Medium-dark roast',
+        text: 'Dense body and low acidity. Made for espresso and moka.',
+        notes: ['Hazelnut', 'Chocolate', 'Caramel'],
+      },
+    ],
+  },
+  plan: {
+    eyebrow: '04 — The plan',
+    titleBefore: 'One plan. ',
+    titleAccent: 'No fine print.',
+    features: [
+      '250 g of freshly roasted coffee every month',
+      'Tasting card and a recipe for your method',
+      'Shipping included, in under 72 h',
+      'Pause or cancel from your account, free of charge',
+    ],
+    cardTitle: 'Faro subscription',
+    badge: 'Monthly',
+    perMonth: '/ month',
+    nextRoastLabel: 'Next roast',
+    nextRoastValue: 'DEC 01',
+    cta: 'Subscribe now',
+    demo: 'Demo: this button does not charge you or store any data.',
   },
 };
