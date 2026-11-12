@@ -1,7 +1,7 @@
 import { priceLabel } from '../data/plan';
 
 export type Dictionary = {
-  meta: { title: string; description: string };
+  meta: { title: string; description: string; ogImageAlt: string };
   a11y: { skipToContent: string };
   header: {
     homeLabel: string;
@@ -97,6 +97,7 @@ export const es: Dictionary = {
     title: 'Café Faro · Suscripción de café de especialidad',
     description:
       'Café de especialidad tostado en pequeños lotes y enviado a tu casa cada mes.',
+    ogImageAlt: 'Logotipo de Café Faro: un faro con su haz de luz ámbar sobre el mar de noche.',
   },
   a11y: {
     skipToContent: 'Saltar al contenido',

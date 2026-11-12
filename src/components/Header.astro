@@ -84,7 +84,7 @@ const links = [
                 href={`/${code}/`}
                 lang={code}
                 hreflang={code}
-                aria-label={t.langNames[code]}
+                aria-label={`${code.toUpperCase()}, ${t.langNames[code]}`}
                 aria-current={code === lang ? 'true' : undefined}
                 class:list={[
                   'inline-flex min-h-11 min-w-11 items-center justify-center rounded-full px-2 font-semibold uppercase no-underline transition-colors',

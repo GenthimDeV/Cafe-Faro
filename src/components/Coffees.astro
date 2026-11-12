@@ -48,9 +48,10 @@ const profileKeys = ['acidity', 'body', 'sweetness'] as const;
               class="relative flex h-[230px] items-end justify-center overflow-hidden"
               style={`background-color: ${coffee.color}`}
             >
-              <span class="absolute left-5 top-3.5 font-display text-[96px] font-extrabold leading-none tracking-[-0.05em] text-white/15">
-                {coffee.code}
-              </span>
+              <span
+                data-code={coffee.code}
+                class="absolute left-5 top-3.5 font-display text-[96px] font-extrabold leading-none tracking-[-0.05em] text-white/15 after:content-[attr(data-code)]"
+              ></span>
               <CoffeeBag
                 month={item.month}
                 brand={t.brand}

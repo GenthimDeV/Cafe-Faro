@@ -6,6 +6,7 @@ export const en: Dictionary = {
     title: 'Café Faro · Specialty coffee subscription',
     description:
       'Specialty coffee roasted in small batches and delivered to your door every month.',
+    ogImageAlt: 'Café Faro logo: a lighthouse with its amber beam over the sea at night.',
   },
   a11y: {
     skipToContent: 'Skip to content',

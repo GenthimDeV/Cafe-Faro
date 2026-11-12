@@ -4,4 +4,5 @@ export const site = {
   author: 'GenthimDeV',
   portfolioUrl: 'https://github.com/GenthimDeV',
   year: 2026,
+  ogImage: '/og-image.png',
 } as const;
