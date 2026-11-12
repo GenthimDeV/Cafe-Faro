@@ -1,0 +1,43 @@
+---
+import type { Dictionary } from '../i18n/es';
+
+interface Props {
+  t: Dictionary['finalCta'];
+}
+
+const { t } = Astro.props;
+---
+
+<section class="bg-night text-salt">
+  <div
+    class="mx-auto flex max-w-[1240px] flex-col items-center gap-8 px-6 py-[120px] text-center max-md:py-20"
+  >
+    <h2
+      class="max-w-[16ch] text-[clamp(40px,6vw,80px)] font-extrabold leading-[0.95] tracking-[-0.04em]"
+    >
+      {t.titleBefore}<span class="font-normal italic text-beam"
+        >{t.titleAccent}</span
+      >
+    </h2>
+    <p class="max-w-[48ch] text-lg text-muted-dark">{t.text}</p>
+    <a
+      href="#plan"
+      class="inline-flex min-h-[58px] items-center justify-center gap-3 rounded-full bg-beam px-8 py-[19px] text-[17px] font-bold text-night no-underline"
+    >
+      {t.cta}
+      <svg
+        width="18"
+        height="18"
+        viewBox="0 0 18 18"
+        aria-hidden="true"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+      >
+        <path d="M3 9h12M10 4l5 5-5 5"></path>
+      </svg>
+    </a>
+    <p class="text-[13px] text-muted-dark">{t.demo}</p>
+  </div>
+</section>

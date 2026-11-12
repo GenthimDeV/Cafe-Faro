@@ -133,4 +133,45 @@ export const en: Dictionary = {
     cta: 'Subscribe now',
     demo: 'Demo: this button does not charge you or store any data.',
   },
+  faq: {
+    eyebrow: '05 — FAQ',
+    titleBefore: 'What people ',
+    titleAccent: 'ask us.',
+    items: [
+      {
+        q: 'When does my first bag arrive?',
+        a: 'We roast in the first week of each month and ship right after. Your coffee arrives within 72 hours of roasting.',
+      },
+      {
+        q: 'Can I change the grind?',
+        a: 'Yes. Choose espresso, moka, filter or whole bean, and change it before each roast.',
+      },
+      {
+        q: 'How do I pause or cancel?',
+        a: 'From your account, in one click and free of charge. If you cancel before orders close, your batch is not roasted.',
+      },
+      {
+        q: 'How much coffee is in each shipment?',
+        a: 'One 250 g bag, enough for about 14 cups of filter coffee or 12 double espressos.',
+      },
+      {
+        q: 'Is this a real shop?',
+        a: 'No. Café Faro is a fictional brand made as a portfolio demo: no charges, orders or stored data.',
+      },
+    ],
+  },
+  finalCta: {
+    titleBefore: 'Your next cup already has a ',
+    titleAccent: 'heading.',
+    text: 'Subscribe today and get the December batch freshly roasted.',
+    cta: `Subscribe for ${priceLabel}/month`,
+    demo: 'Demo: this button does not charge you or store any data.',
+  },
+  footer: {
+    label: 'Footer',
+    brand: 'FARO',
+    copyright: 'Café Faro, a fictional brand.',
+    madeBy: 'Design and development by',
+    demoNote: 'Portfolio project, not for commercial use.',
+  },
 };

@@ -68,6 +68,26 @@ export type Dictionary = {
     cta: string;
     demo: string;
   };
+  faq: {
+    eyebrow: string;
+    titleBefore: string;
+    titleAccent: string;
+    items: { q: string; a: string }[];
+  };
+  finalCta: {
+    titleBefore: string;
+    titleAccent: string;
+    text: string;
+    cta: string;
+    demo: string;
+  };
+  footer: {
+    label: string;
+    brand: string;
+    copyright: string;
+    madeBy: string;
+    demoNote: string;
+  };
 };
 
 export const es: Dictionary = {
@@ -200,5 +220,46 @@ export const es: Dictionary = {
     nextRoastValue: '01 DIC',
     cta: 'Suscribirme ahora',
     demo: 'Demo: este botón no realiza cobros ni guarda datos.',
+  },
+  faq: {
+    eyebrow: '05 — Preguntas frecuentes',
+    titleBefore: 'Lo que suelen ',
+    titleAccent: 'preguntarnos.',
+    items: [
+      {
+        q: '¿Cuándo llega mi primera bolsa?',
+        a: 'Tostamos la primera semana de cada mes y enviamos al terminar. Recibirás tu café en menos de 72 horas desde el tueste.',
+      },
+      {
+        q: '¿Puedo cambiar la molienda?',
+        a: 'Sí. Puedes elegir espresso, moka, filtro o grano entero y cambiarlo antes de cada tueste.',
+      },
+      {
+        q: '¿Cómo pauso o cancelo?',
+        a: 'Desde tu cuenta, en un clic y sin coste. Si cancelas antes del cierre de pedidos, no se tuesta tu lote.',
+      },
+      {
+        q: '¿Cuánto café incluye cada envío?',
+        a: 'Una bolsa de 250 g, suficiente para unas 14 tazas de filtro o unos 12 espressos dobles.',
+      },
+      {
+        q: '¿Esto es una tienda real?',
+        a: 'No. Café Faro es una marca ficticia creada como demo de portfolio: no hay cobros, pedidos ni datos guardados.',
+      },
+    ],
+  },
+  finalCta: {
+    titleBefore: 'Tu próxima taza ya tiene ',
+    titleAccent: 'rumbo.',
+    text: 'Suscríbete hoy y recibe el lote de diciembre recién tostado.',
+    cta: `Suscribirme por ${priceLabel}/mes`,
+    demo: 'Demo: este botón no realiza cobros ni guarda datos.',
+  },
+  footer: {
+    label: 'Pie de página',
+    brand: 'FARO',
+    copyright: 'Café Faro, marca ficticia.',
+    madeBy: 'Diseño y desarrollo por',
+    demoNote: 'Proyecto de portfolio, sin fines comerciales.',
   },
 };

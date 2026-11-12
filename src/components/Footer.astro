@@ -1,0 +1,35 @@
+---
+import type { Dictionary } from '../i18n/es';
+import { site } from '../data/site';
+
+interface Props {
+  t: Dictionary['footer'];
+}
+
+const { t } = Astro.props;
+---
+
+<footer aria-label={t.label} class="overflow-hidden bg-night text-salt">
+  <div class="mx-auto max-w-[1240px] px-6 pt-10">
+    <div
+      aria-hidden="true"
+      class="select-none text-center font-display text-[clamp(96px,26vw,340px)] font-extrabold leading-[0.8] tracking-[-0.06em] text-deep"
+    >
+      {t.brand}
+    </div>
+  </div>
+  <div
+    class="mx-auto flex max-w-[1240px] flex-wrap items-center justify-between gap-x-8 gap-y-3 border-t border-line-dark px-6 py-8 text-sm text-muted-dark"
+  >
+    <p>© {site.year} {t.copyright} {t.demoNote}</p>
+    <p>
+      {t.madeBy}
+      <a
+        href={site.portfolioUrl}
+        rel="noopener"
+        class="font-semibold text-salt underline underline-offset-4 hover:text-beam"
+        >{site.author}</a
+      >
+    </p>
+  </div>
+</footer>

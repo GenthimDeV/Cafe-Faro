@@ -1,0 +1,53 @@
+---
+import type { Dictionary } from '../i18n/es';
+
+interface Props {
+  t: Dictionary['faq'];
+}
+
+const { t } = Astro.props;
+---
+
+<section id="faq" class="scroll-mt-20">
+  <div
+    class="mx-auto flex max-w-[860px] flex-col gap-10 px-6 py-[120px] max-md:py-20"
+  >
+    <div class="flex flex-col gap-[22px]">
+      <p class="font-mono text-[13px] uppercase tracking-[0.08em] text-rust">
+        {t.eyebrow}
+      </p>
+      <h2
+        class="text-[clamp(36px,4.6vw,60px)] font-extrabold leading-none tracking-[-0.035em]"
+      >
+        {t.titleBefore}<span class="font-normal italic">{t.titleAccent}</span>
+      </h2>
+    </div>
+    <div class="border-t border-line">
+      {
+        t.items.map((item) => (
+          <details class="group border-b border-line">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-6 font-display text-xl font-bold [&::-webkit-details-marker]:hidden">
+              {item.q}
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                aria-hidden="true"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.2"
+                stroke-linecap="round"
+                class="flex-none text-rust transition-transform group-open:rotate-45 motion-reduce:transition-none"
+              >
+                <path d="M10 3v14M3 10h14" />
+              </svg>
+            </summary>
+            <p class="max-w-[68ch] pb-6 text-[17px] leading-relaxed text-muted">
+              {item.a}
+            </p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
