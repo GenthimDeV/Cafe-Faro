@@ -1,1 +1,70 @@
 @import "tailwindcss";
+
+/* Fuentes autoalojadas (@fontsource), solo subconjunto latino. */
+@import "@fontsource/inter/latin-400.css";
+@import "@fontsource/inter/latin-500.css";
+@import "@fontsource/inter/latin-600.css";
+@import "@fontsource/jetbrains-mono/latin-500.css";
+
+/* Bricolage Grotesque variable (ejes wght + opsz), solo latino.
+   Se declara a mano para no arrastrar los subconjuntos vietnamita y latin-ext. */
+@font-face {
+  font-family: "Bricolage Grotesque Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 800;
+  src: url("@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-opsz-normal.woff2")
+    format("woff2-variations");
+}
+
+/* Tokens de marca "Señal costera": único sitio donde se definen. */
+@theme {
+  --color-night: #0b1c2c;
+  --color-ink: #10263a;
+  --color-deep: #1c3349;
+  --color-line-dark: #2e4559;
+  --color-salt: #f1f3f2;
+  --color-mist: #e6ecef;
+  --color-paper: #ffffff;
+  --color-line: #d5dce0;
+  --color-muted: #3e5163;
+  --color-muted-dark: #c4cfd8;
+  --color-beam: #f2a93b;
+  --color-rust: #b5401c;
+
+  /* Colores de origen (tarjetas de cafés) */
+  --color-origin-colombia: #b5401c;
+  --color-origin-ethiopia: #4f7a68;
+  --color-origin-brazil: #4a3426;
+
+  --font-display: "Bricolage Grotesque Variable", ui-sans-serif, system-ui,
+    sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+@layer base {
+  html {
+    background-color: var(--color-salt);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* Tamaño óptico automático según el cuerpo del texto */
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+  }
+
+  /* Foco ámbar visible (sobre oscuro directo; sobre claro con halo oscuro) */
+  :focus-visible {
+    outline: 3px solid var(--color-beam);
+    outline-offset: 3px;
+    box-shadow: 0 0 0 6px var(--color-night);
+    border-radius: 2px;
+  }
+}
