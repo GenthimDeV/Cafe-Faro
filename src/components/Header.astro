@@ -1,0 +1,76 @@
+---
+import type { Dictionary } from '../i18n/es';
+
+interface Props {
+  t: Dictionary['header'];
+}
+
+const { t } = Astro.props;
+
+const links = [
+  { href: '#como-funciona', label: t.links.how },
+  { href: '#cafes', label: t.links.coffees },
+  { href: '#plan', label: t.links.plan },
+  { href: '#faq', label: t.links.faq },
+];
+---
+
+<header class="bg-night text-salt">
+  <div
+    class="mx-auto flex max-w-[1240px] items-center justify-between gap-4 px-6 py-5"
+  >
+    <a
+      href="#inicio"
+      aria-label={t.homeLabel}
+      class="flex items-center gap-2.5 text-salt no-underline"
+    >
+      <svg
+        width="30"
+        height="30"
+        viewBox="0 0 28 28"
+        aria-hidden="true"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linejoin="round"
+      >
+        <path d="M11 25h6l-1-15h-4z"></path>
+        <path d="M10 10h8"></path>
+        <path d="M12 10V6h4v4"></path>
+        <path d="M14 3v3"></path>
+        <path d="M18 7l5-2M18 9l5 2" class="stroke-beam"></path>
+      </svg>
+      <span class="font-display text-[22px] font-extrabold tracking-[-0.02em]"
+        >Café Faro</span
+      >
+    </a>
+
+    <nav
+      aria-label={t.navLabel}
+      class="flex items-center gap-4 text-[15px] font-medium md:gap-6"
+    >
+      <!-- Enlaces de sección: ocultos en móvil (menú simplificado, sin JS) -->
+      <ul class="hidden items-center gap-6 md:flex">
+        {
+          links.map((l) => (
+            <li>
+              <a
+                href={l.href}
+                class="text-muted-dark no-underline transition-colors hover:text-salt"
+              >
+                {l.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <!-- Hueco del selector ES/EN (tarea 4.1) -->
+      <a
+        href="#plan"
+        class="inline-flex min-h-11 items-center rounded-full bg-beam px-5 py-3 font-semibold text-night no-underline"
+      >
+        {t.cta}
+      </a>
+    </nav>
+  </div>
+</header>
