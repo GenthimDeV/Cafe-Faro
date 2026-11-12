@@ -1,11 +1,15 @@
 ---
 import type { Dictionary } from '../i18n/es';
+import type { Locale } from '../i18n';
+import { anchors } from '../data/anchors';
 
 interface Props {
+  lang: Locale;
   t: Dictionary['how'];
 }
 
-const { t } = Astro.props;
+const { t, lang } = Astro.props;
+const a = anchors[lang];
 
 // Iconos decorativos, uno por paso (mismo orden que t.steps).
 const icons = [
@@ -20,7 +24,7 @@ const icons = [
 ---
 
 <section
-  id="como-funciona"
+  id={a.how}
   class="relative overflow-hidden bg-ink text-salt"
 >
   <div

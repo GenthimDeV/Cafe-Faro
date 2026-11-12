@@ -1,12 +1,16 @@
 ---
 import LighthouseTower from './LighthouseTower.astro';
 import type { Dictionary } from '../i18n/es';
+import type { Locale } from '../i18n';
+import { anchors } from '../data/anchors';
 
 interface Props {
+  lang: Locale;
   t: Dictionary['finalCta'];
 }
 
-const { t } = Astro.props;
+const { t, lang } = Astro.props;
+const a = anchors[lang];
 ---
 
 <section class="relative overflow-hidden bg-night text-salt">
@@ -43,7 +47,7 @@ const { t } = Astro.props;
     </h2>
     <p class="max-w-[48ch] text-lg text-muted-dark">{t.text}</p>
     <a
-      href="#plan"
+      href={`#${a.plan}`}
       class="inline-flex min-h-[58px] items-center justify-center gap-3 rounded-full bg-beam px-8 py-[19px] text-[17px] font-bold text-night no-underline"
     >
       {t.cta}

@@ -1,15 +1,19 @@
 ---
 import type { Dictionary } from '../i18n/es';
+import type { Locale } from '../i18n';
+import { anchors } from '../data/anchors';
 import { plan } from '../data/plan';
 
 interface Props {
+  lang: Locale;
   t: Dictionary['plan'];
 }
 
-const { t } = Astro.props;
+const { t, lang } = Astro.props;
+const a = anchors[lang];
 ---
 
-<section id="plan" class="border-y border-line bg-mist">
+<section id={a.plan} class="border-y border-line bg-mist">
   <div
     class="mx-auto flex max-w-[1240px] flex-wrap items-center gap-14 px-6 py-[120px] max-md:py-20"
   >
@@ -75,7 +79,7 @@ const { t } = Astro.props;
         <span class="font-mono text-salt">{t.nextRoastValue}</span>
       </p>
       <a
-        href="#plan"
+        href={`#${a.plan}`}
         class="relative inline-flex min-h-[58px] items-center justify-center gap-3 rounded-full bg-beam px-7 py-[19px] text-[17px] font-bold text-night no-underline"
       >
         {t.cta}

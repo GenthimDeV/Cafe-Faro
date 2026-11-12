@@ -46,7 +46,13 @@
 
 @layer base {
   html {
+    scroll-padding-top: 8rem;
     background-color: var(--color-salt);
+    /* Franja oscura bajo el hueco de la cabecera sticky: evita que asome el fondo
+       claro mientras la cabecera translúcida vuelve a sólida al subir. */
+    background-image: linear-gradient(var(--color-night), var(--color-night));
+    background-repeat: no-repeat;
+    background-size: 100% 16rem;
     color: var(--color-ink);
     font-family: var(--font-sans);
     -webkit-text-size-adjust: 100%;
@@ -139,6 +145,12 @@
   }
   to {
     transform: translateX(-50%);
+  }
+}
+
+@media (min-width: 48rem) {
+  html {
+    scroll-padding-top: 5rem;
   }
 }
 

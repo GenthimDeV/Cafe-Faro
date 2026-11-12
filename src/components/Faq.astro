@@ -1,14 +1,18 @@
 ---
 import type { Dictionary } from '../i18n/es';
+import type { Locale } from '../i18n';
+import { anchors } from '../data/anchors';
 
 interface Props {
+  lang: Locale;
   t: Dictionary['faq'];
 }
 
-const { t } = Astro.props;
+const { t, lang } = Astro.props;
+const a = anchors[lang];
 ---
 
-<section id="faq" class="scroll-mt-20">
+<section id={a.faq}>
   <div
     class="mx-auto flex max-w-[860px] flex-col gap-10 px-6 py-[120px] max-md:py-20"
   >

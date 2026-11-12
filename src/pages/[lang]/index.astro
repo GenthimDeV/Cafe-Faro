@@ -26,14 +26,14 @@ const t = useTranslations(lang);
   description={t.meta.description}
   skipLabel={t.a11y.skipToContent}
 >
-  <Header slot="header" t={t.header} />
-  <Hero t={t.hero} />
+  <Header slot="header" t={t.header} lang={lang} />
+  <Hero t={t.hero} lang={lang} />
   <Marquee t={t.marquee} />
   <About t={t.about} />
-  <HowItWorks t={t.how} />
-  <Coffees t={t.coffees} />
-  <Plan t={t.plan} />
-  <Faq t={t.faq} />
-  <FinalCta t={t.finalCta} />
+  <HowItWorks t={t.how} lang={lang} />
+  <Coffees t={t.coffees} lang={lang} />
+  <Plan t={t.plan} lang={lang} />
+  <Faq t={t.faq} lang={lang} />
+  <FinalCta t={t.finalCta} lang={lang} />
   <Footer slot="footer" t={t.footer} />
 </BaseLayout>

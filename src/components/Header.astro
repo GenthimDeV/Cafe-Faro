@@ -1,26 +1,35 @@
 ---
 import type { Dictionary } from '../i18n/es';
+import { locales, type Locale } from '../i18n';
+import { anchors } from '../data/anchors';
 
 interface Props {
   t: Dictionary['header'];
+  lang: Locale;
 }
 
-const { t } = Astro.props;
+const { t, lang } = Astro.props;
 
+const a = anchors[lang];
 const links = [
-  { href: '#como-funciona', label: t.links.how },
-  { href: '#cafes', label: t.links.coffees },
-  { href: '#plan', label: t.links.plan },
-  { href: '#faq', label: t.links.faq },
+  { href: `#${a.how}`, label: t.links.how },
+  { href: `#${a.coffees}`, label: t.links.coffees },
+  { href: `#${a.plan}`, label: t.links.plan },
+  { href: `#${a.faq}`, label: t.links.faq },
 ];
 ---
 
-<header id="inicio" class="bg-night text-salt">
+<!-- Ancla de inicio fuera de la cabecera sticky: un elemento sticky no sirve de destino de scroll -->
+<div id={a.top}></div>
+<header
+  data-header
+  class="sticky top-0 z-40 bg-night text-salt transition-colors duration-200 data-[scrolled]:bg-night/80 data-[scrolled]:backdrop-blur-md"
+>
   <div
-    class="mx-auto flex max-w-[1240px] items-center justify-between gap-4 px-6 py-5"
+    class="mx-auto flex max-w-[1240px] flex-wrap items-center justify-between gap-x-4 gap-y-1 px-6 py-3 md:py-5"
   >
     <a
-      href="#inicio"
+      href={`#${a.top}`}
       aria-label={t.homeLabel}
       class="flex items-center gap-2.5 text-salt no-underline"
     >
@@ -40,23 +49,22 @@ const links = [
         <path d="M14 3v3"></path>
         <path d="M18 7l5-2M18 9l5 2" class="stroke-beam"></path>
       </svg>
-      <span class="font-display text-[22px] font-extrabold tracking-[-0.02em]"
+      <span class="font-display text-[22px] max-[420px]:sr-only font-extrabold tracking-[-0.02em]"
         >Café Faro</span
       >
     </a>
 
     <nav
       aria-label={t.navLabel}
-      class="flex items-center gap-4 text-[15px] font-medium md:gap-6"
+      class="order-last basis-full md:order-none md:ml-auto md:basis-auto"
     >
-      <!-- Enlaces de sección: ocultos en móvil (menú simplificado, sin JS) -->
-      <ul class="hidden items-center gap-6 md:flex">
+      <ul class="-mx-1 flex items-center gap-5 overflow-x-auto whitespace-nowrap text-[15px] font-medium md:gap-6 md:overflow-visible">
         {
           links.map((l) => (
             <li>
               <a
                 href={l.href}
-                class="text-muted-dark no-underline transition-colors hover:text-salt"
+                class="inline-flex min-h-11 items-center px-1 text-muted-dark no-underline transition-colors hover:text-salt"
               >
                 {l.label}
               </a>
@@ -64,13 +72,65 @@ const links = [
           ))
         }
       </ul>
-      <!-- Hueco del selector ES/EN (tarea 4.1) -->
+    </nav>
+    <div class="flex items-center gap-2 text-[15px] font-medium md:gap-4">
+      <!-- Selector de idioma: enlaces reales a /es/ y /en/. Sin JS lleva a la portada;
+           el script inferior añade la ancla de la sección actual (mejora progresiva). -->
+      <ul aria-label={t.langLabel} class="flex items-center gap-1 text-[14px]" data-lang-switch data-anchors={JSON.stringify(anchors)} data-lang={lang}>
+        {
+          locales.map((code) => (
+            <li>
+              <a
+                href={`/${code}/`}
+                lang={code}
+                hreflang={code}
+                aria-label={t.langNames[code]}
+                aria-current={code === lang ? 'true' : undefined}
+                class:list={[
+                  'inline-flex min-h-11 min-w-11 items-center justify-center rounded-full px-2 font-semibold uppercase no-underline transition-colors',
+                  code === lang
+                    ? 'bg-salt/15 text-salt'
+                    : 'text-muted-dark hover:text-salt',
+                ]}
+              >
+                {code}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
       <a
-        href="#plan"
-        class="inline-flex min-h-11 items-center rounded-full bg-beam px-5 py-3 font-semibold text-night no-underline"
+        href={`#${a.plan}`}
+        class="inline-flex min-h-11 items-center rounded-full bg-beam px-4 py-3 md:px-5 font-semibold text-night no-underline"
       >
         {t.cta}
       </a>
-    </nav>
+    </div>
   </div>
 </header>
+
+<script>
+  // Conserva la sección: añade la ancla actual a los enlaces del selector.
+  const list = document.querySelector<HTMLElement>('[data-lang-switch]')!;
+  const map = JSON.parse(list.dataset.anchors ?? '{}') as Record<string, Record<string, string>>;
+  const current = list.dataset.lang ?? 'es';
+  const links = list.querySelectorAll<HTMLAnchorElement>('a');
+  const base = Array.from(links, (a) => a.getAttribute('href') ?? '');
+  const sync = () => {
+    const id = decodeURIComponent(location.hash.slice(1));
+    const key = Object.keys(map[current]).find((k) => map[current][k] === id);
+    links.forEach((a, i) => {
+      const target = a.getAttribute('hreflang') ?? current;
+      a.setAttribute('href', key ? `${base[i]}#${map[target][key]}` : base[i]);
+    });
+  };
+  sync();
+  window.addEventListener('hashchange', sync);
+
+  // Sólido mientras el hueco original de la cabecera sigue a la vista (detrás solo hay
+  // fondo claro); semitransparente cuando ya hay contenido debajo.
+  const header = document.querySelector<HTMLElement>('[data-header]')!;
+  const onScroll = () => header.toggleAttribute('data-scrolled', window.scrollY >= header.offsetHeight);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+</script>

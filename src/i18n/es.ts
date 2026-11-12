@@ -7,6 +7,7 @@ export type Dictionary = {
     homeLabel: string;
     navLabel: string;
     langLabel: string;
+    langNames: { es: string; en: string };
     links: { how: string; coffees: string; plan: string; faq: string };
     cta: string;
   };
@@ -104,6 +105,7 @@ export const es: Dictionary = {
     homeLabel: 'Café Faro, inicio',
     navLabel: 'Principal',
     langLabel: 'Idioma',
+    langNames: { es: 'Español', en: 'English' },
     links: {
       how: 'Cómo funciona',
       coffees: 'Los cafés',

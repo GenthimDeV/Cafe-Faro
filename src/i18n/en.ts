@@ -10,11 +10,11 @@ export const en: Dictionary = {
   a11y: {
     skipToContent: 'Skip to content',
   },
-  // Textos provisionales: la tarea 4.1 los revisa como EN nativo.
   header: {
     homeLabel: 'Café Faro, home',
     navLabel: 'Main',
     langLabel: 'Language',
+    langNames: { es: 'Español', en: 'English' },
     links: {
       how: 'How it works',
       coffees: 'The coffees',
