@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
+  site: 'https://cafe-faro.pages.dev',
   output: 'static',
   // CSS en línea: evita la hoja bloqueante de render (pesa < 10 KB).
   build: { inlineStylesheets: 'always' },

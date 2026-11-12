@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://cafe-faro.pages.dev/sitemap.xml
