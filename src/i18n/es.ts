@@ -19,6 +19,7 @@ export type Dictionary = {
     cta: string;
     secondary: string;
   };
+  marquee: { items: string[] };
   about: {
     eyebrow: string;
     titleBefore: string;
@@ -119,6 +120,16 @@ export const es: Dictionary = {
     text: 'Cada mes elegimos un café de especialidad, lo tostamos en lotes pequeños y te lo enviamos en menos de 72 horas. Tú solo decides cómo prepararlo.',
     cta: `Suscribirme por ${priceLabel}/mes`,
     secondary: 'Ver cómo funciona',
+  },
+  marquee: {
+    items: [
+      'Huila, Colombia',
+      'Sidamo, Etiopía',
+      'Cerrado, Brasil',
+      'Tostado por encargo',
+      'Envío en 72 h',
+      '84+ puntos SCA',
+    ],
   },
   about: {
     eyebrow: '01 — Qué es Café Faro',

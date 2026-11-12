@@ -122,7 +122,35 @@
   }
 }
 
+/* Bolsas (3.2) y cinta (3.2) */
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 @layer components {
+  .bag {
+    animation: bob 6s ease-in-out infinite;
+  }
+
+  .marquee-track {
+    animation: marquee 38s linear infinite;
+  }
+
   /* Polvo de estrellas sutil; opacidad ajustable con --stars-opacity */
   .star-dust {
     position: absolute;
@@ -231,16 +259,14 @@
   }
 }
 
+/* Reduced motion: ninguna animación ni transición se mueve (cubre todas las clases actuales y futuras). */
 @media (prefers-reduced-motion: reduce) {
-  .beam-arm,
-  .beam-light,
-  .lamp,
-  .twinkle,
-  .wave-row,
-  .boat,
-  .sparkle,
-  .gull {
-    animation: none;
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
   }
   .beam-arm {
     transform: rotate(-2deg);

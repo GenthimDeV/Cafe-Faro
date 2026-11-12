@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Hero from '../../components/Hero.astro';
+import Marquee from '../../components/Marquee.astro';
 import About from '../../components/About.astro';
 import HowItWorks from '../../components/HowItWorks.astro';
 import Coffees from '../../components/Coffees.astro';
@@ -27,6 +28,7 @@ const t = useTranslations(lang);
 >
   <Header slot="header" t={t.header} />
   <Hero t={t.hero} />
+  <Marquee t={t.marquee} />
   <About t={t.about} />
   <HowItWorks t={t.how} />
   <Coffees t={t.coffees} />

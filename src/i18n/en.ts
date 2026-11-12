@@ -32,6 +32,16 @@ export const en: Dictionary = {
     cta: `Subscribe for ${priceLabel}/month`,
     secondary: 'See how it works',
   },
+  marquee: {
+    items: [
+      'Huila, Colombia',
+      'Sidamo, Ethiopia',
+      'Cerrado, Brazil',
+      'Roasted to order',
+      'Shipped in 72 h',
+      '84+ SCA points',
+    ],
+  },
   about: {
     eyebrow: '01 — What Café Faro is',
     titleBefore: 'We roast little, ',

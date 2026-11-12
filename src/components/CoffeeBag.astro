@@ -1,0 +1,62 @@
+---
+// Bolsa de café ilustrada (solo CSS/SVG, decorativa). Flota 6 s; `delay` desfasa cada bolsa.
+interface Props {
+  month: string;
+  brand: string;
+  color: string;
+  code: string;
+  tilt: number;
+  delay?: number;
+}
+
+const { month, brand, color, code, tilt, delay = 0 } = Astro.props;
+---
+
+<div class="absolute bottom-0 left-1/2 -ml-[65px]" style={`rotate: ${tilt}deg`}>
+  <div class="bag" style={`animation-delay: ${delay}s`}>
+    <div class="relative h-[184px] w-[130px] translate-y-3.5">
+      <!-- Pliegue superior sellado -->
+      <div
+        class="absolute inset-x-0 top-0 h-[22px] rounded-t-[8px] bg-mist"
+        style="box-shadow: inset 0 -1px 0 rgba(16,38,58,0.18)"
+      >
+        <div
+          class="absolute inset-x-2.5 top-[7px] h-[2px] rounded-full"
+          style="background-image: repeating-linear-gradient(90deg, rgba(16,38,58,0.3) 0 6px, transparent 6px 10px)"
+        >
+        </div>
+      </div>
+      <!-- Cuerpo -->
+      <div
+        class="absolute inset-x-0 bottom-0 top-[22px] flex flex-col justify-between bg-salt px-3.5 pb-4 pt-3 shadow-[0_20px_40px_rgba(0,0,0,0.25)]"
+      >
+        <div class="flex items-center justify-between">
+          <span class="font-mono text-[9px] text-muted">{month}</span>
+          <span
+            class="rounded-full px-1.5 py-px font-mono text-[9px] font-medium text-white"
+            style={`background-color: ${color}`}>{code}</span
+          >
+        </div>
+        <span
+          class="font-display text-[28px] font-extrabold leading-[0.9] text-ink"
+        >
+          {brand}
+        </span>
+        <div class="flex flex-col gap-1.5">
+          <svg
+            viewBox="0 0 24 24"
+            width="16"
+            height="16"
+            fill={color}
+            aria-hidden="true"
+          >
+            <path d="M12 2l1.8 7.2L21 12l-7.2 2.8L12 22l-1.8-7.2L3 12l7.2-2.8z"
+            ></path>
+          </svg>
+          <div class="h-[5px] rounded-[3px]" style={`background-color: ${color}`}>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

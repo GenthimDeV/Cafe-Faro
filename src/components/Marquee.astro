@@ -1,0 +1,30 @@
+---
+// Cinta animada bajo el hero (decorativa). Lista duplicada para un bucle sin saltos.
+import type { Dictionary } from '../i18n/es';
+
+interface Props {
+  t: Dictionary['marquee'];
+}
+
+const { t } = Astro.props;
+---
+
+<div
+  aria-hidden="true"
+  class="relative overflow-hidden border-t border-line-dark bg-ink py-[18px]"
+>
+  <div
+    class="marquee-track flex w-max gap-12 whitespace-nowrap font-display text-[22px] font-semibold tracking-[-0.01em] text-muted-dark"
+  >
+    {
+      [0, 1].map(() =>
+        t.items.map((item) => (
+          <>
+            <span>{item}</span>
+            <span class="text-beam">✦</span>
+          </>
+        ))
+      )
+    }
+  </div>
+</div>
