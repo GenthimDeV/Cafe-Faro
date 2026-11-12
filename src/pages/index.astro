@@ -1,20 +1,5 @@
 ---
-import '../styles/global.css';
+// Respaldo de la redirección de Cloudflare (`public/_redirects`): en build estático
+// Astro genera una página con meta refresh hacia el idioma por defecto.
+return Astro.redirect('/es/', 301);
 ---
-
-<!doctype html>
-<html lang="es">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>Café Faro</title>
-  </head>
-  <body class="grid min-h-screen place-items-center">
-    <main>
-      <h1 class="font-display text-4xl font-extrabold text-ink">Café Faro</h1>
-      <p class="font-mono text-sm uppercase text-rust">01 — Tokens</p>
-      <a href="#" class="font-sans font-medium text-muted underline">Foco</a>
-    </main>
-  </body>
-</html>

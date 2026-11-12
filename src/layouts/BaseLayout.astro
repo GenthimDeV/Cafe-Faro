@@ -1,0 +1,43 @@
+---
+import '../styles/global.css';
+import { defaultLocale, locales, type Locale } from '../i18n';
+
+interface Props {
+  lang: Locale;
+  title: string;
+  description: string;
+  skipLabel: string;
+}
+
+const { lang, title, description, skipLabel } = Astro.props;
+
+// Con `site` definido (tarea 6.1) las URLs hreflang/canonical serán absolutas;
+// mientras tanto son relativas para no filtrar localhost al build.
+const abs = (locale: Locale) =>
+  Astro.site ? new URL(`/${locale}/`, Astro.site).href : `/${locale}/`;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={abs(lang)} />
+    {locales.map((l) => <link rel="alternate" hreflang={l} href={abs(l)} />)}
+    <link rel="alternate" hreflang="x-default" href={abs(defaultLocale)} />
+  </head>
+  <body>
+    <a
+      href="#contenido"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-night focus:px-4 focus:py-2 focus:font-medium focus:text-salt"
+    >
+      {skipLabel}
+    </a>
+    <main id="contenido">
+      <slot />
+    </main>
+  </body>
+</html>
