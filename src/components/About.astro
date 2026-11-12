@@ -1,0 +1,76 @@
+---
+import type { Dictionary } from '../i18n/es';
+
+interface Props {
+  t: Dictionary['about'];
+}
+
+const { t } = Astro.props;
+
+// Iconos decorativos, uno por tarjeta (mismo orden que t.cards).
+const icons = [
+  ['M18 5c4 5 7 8 7 13a7 7 0 0 1-14 0c0-5 3-8 7-13z', 'M18 22v-5'],
+  ['M18 31s-10-8-10-16a10 10 0 0 1 20 0c0 8-10 16-10 16z'],
+  ['M10 8h16l-2 6H12z', 'M12 14l2 14h8l2-14', 'M18 4v4'],
+];
+---
+
+<section
+  class="mx-auto flex max-w-[1240px] flex-wrap items-start gap-14 px-6 pb-[104px] pt-[120px] max-md:pb-20 max-md:pt-20"
+>
+  <div class="flex min-w-0 flex-[1_1_420px] flex-col gap-[18px]">
+    <p
+      class="font-mono text-[13px] uppercase tracking-[0.08em] text-rust"
+    >
+      {t.eyebrow}
+    </p>
+    <h2
+      class="text-[clamp(36px,4.6vw,60px)] font-extrabold leading-none tracking-[-0.035em]"
+    >
+      {t.titleBefore}<span class="font-normal italic">{t.titleAccent}</span>
+    </h2>
+    <p class="max-w-[520px] text-lg leading-[1.6] text-muted">{t.text}</p>
+  </div>
+
+  <ul
+    class="grid min-w-0 flex-[1_1_520px] grid-cols-[repeat(auto-fit,minmax(min(230px,100%),1fr))] gap-4"
+  >
+    {
+      t.cards.map((card, i) => (
+        <li class="flex flex-col gap-3.5 rounded-[20px] border border-line bg-paper p-[26px]">
+          <svg
+            width="36"
+            height="36"
+            viewBox="0 0 36 36"
+            aria-hidden="true"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="text-rust"
+          >
+            {icons[i].map((d) => (
+              <path d={d} />
+            ))}
+            {i === 1 && <circle cx="18" cy="15" r="6" />}
+          </svg>
+          <h3 class="text-[21px] font-extrabold">{card.title}</h3>
+          <p class="text-[15px] leading-[1.55] text-muted">{card.text}</p>
+        </li>
+      ))
+    }
+    <li
+      class="flex flex-col justify-between gap-3.5 rounded-[20px] bg-ink p-[26px] text-salt"
+    >
+      <span class="font-mono text-xs tracking-[0.08em] text-beam"
+        >{t.batch.label}</span
+      >
+      <span
+        class="font-display text-[64px] font-extrabold leading-[0.9] tracking-[-0.04em]"
+        >{t.batch.value}</span
+      >
+      <p class="text-[15px] leading-[1.55] text-muted-dark">{t.batch.text}</p>
+    </li>
+  </ul>
+</section>

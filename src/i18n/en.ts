@@ -31,4 +31,55 @@ export const en: Dictionary = {
     cta: 'Subscribe for $18/month',
     secondary: 'See how it works',
   },
+  about: {
+    eyebrow: '01 — What Café Faro is',
+    titleBefore: 'We roast little, ',
+    titleAccent: 'on purpose.',
+    text: 'We are a small roastery by the sea. We keep no stock: we roast just enough for our subscribers, so every bag arrives at its best.',
+    cards: [
+      {
+        title: 'Roasted to order',
+        text: 'We roast after the month’s orders close, never before.',
+      },
+      {
+        title: 'Traceable origin',
+        text: 'Every bag tells you which farm it comes from and who grew it.',
+      },
+      {
+        title: 'Ground your way',
+        text: 'Whole bean or ground for espresso, moka pot, filter or French press.',
+      },
+    ],
+    batch: {
+      label: 'BATCHES OF',
+      value: '12 kg',
+      text: 'Small enough to control every roast from start to finish.',
+    },
+  },
+  how: {
+    eyebrow: '02 — How it works',
+    titleBefore: 'Three steps and the coffee ',
+    titleAccent: 'arrives by itself.',
+    intro:
+      'You subscribe once. Every month, the same ritual: roast, pack and ship.',
+    stepLabel: 'STEP',
+    steps: [
+      {
+        title: 'Pick your grind',
+        text: 'Tell us how you brew at home and we grind it for that method.',
+      },
+      {
+        title: 'We roast your batch',
+        text: 'In the first week of the month we roast the chosen coffee, curve by curve.',
+      },
+      {
+        title: 'It arrives at your door',
+        text: '250 g at your door with a tasting card and the recipe that suits it best.',
+      },
+    ],
+    grinds: ['Espresso', 'Moka pot', 'Filter', 'Whole bean'],
+    roastStages: ['CHARGE', '1ST CRACK', 'DROP'],
+    roastLabel: 'Roast progress: 72%',
+    transit: 'On its way · under 72 h from roasting',
+  },
 };
