@@ -96,6 +96,16 @@ export type Dictionary = {
     back: string;
     next: string;
     choiceError: string;
+    delivery: {
+      name: string;
+      email: string;
+      address: string;
+      postal: string;
+      city: string;
+      required: string;
+      emailInvalid: string;
+      postalInvalid: string;
+    };
     placeholder: string;
   };
   footer: {
@@ -297,6 +307,16 @@ export const es: Dictionary = {
     back: 'Atrás',
     next: 'Siguiente',
     choiceError: 'Elige un café y una molienda para continuar.',
+    delivery: {
+      name: 'Nombre y apellidos',
+      email: 'Correo electrónico',
+      address: 'Dirección',
+      postal: 'Código postal',
+      city: 'Ciudad',
+      required: 'Este campo es obligatorio.',
+      emailInvalid: 'Escribe un correo válido, por ejemplo nombre@correo.com.',
+      postalInvalid: 'El código postal debe tener entre 4 y 10 letras o números.',
+    },
     placeholder: 'Este paso estará disponible muy pronto.',
   },
   footer: {

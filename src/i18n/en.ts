@@ -191,6 +191,16 @@ export const en: Dictionary = {
     back: 'Back',
     next: 'Next',
     choiceError: 'Choose a coffee and a grind to continue.',
+    delivery: {
+      name: 'Full name',
+      email: 'Email',
+      address: 'Address',
+      postal: 'Postal code',
+      city: 'City',
+      required: 'This field is required.',
+      emailInvalid: 'Enter a valid email, for example name@mail.com.',
+      postalInvalid: 'The postal code must be 4 to 10 letters or numbers.',
+    },
     placeholder: 'This step will be available very soon.',
   },
   footer: {

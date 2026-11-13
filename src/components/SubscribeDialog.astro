@@ -10,6 +10,14 @@ interface Props {
 const { t, coffees, grinds } = Astro.props;
 const total = 3;
 const progress = (n: number) => t.progress.replace('{n}', String(n)).replace('{total}', String(total));
+const d = t.delivery;
+const fields = [
+  { name: 'name', label: d.name, type: 'text', autocomplete: 'name' },
+  { name: 'email', label: d.email, type: 'email', autocomplete: 'email' },
+  { name: 'address', label: d.address, type: 'text', autocomplete: 'street-address' },
+  { name: 'postal', label: d.postal, type: 'text', autocomplete: 'postal-code' },
+  { name: 'city', label: d.city, type: 'text', autocomplete: 'address-level2' },
+] as const;
 const btn =
   'inline-flex min-h-[52px] items-center justify-center rounded-full px-7 text-[16px] font-bold';
 ---
@@ -20,6 +28,9 @@ const btn =
   aria-label={t.title}
   data-progress={t.progress}
   data-total={total}
+  data-msg-required={d.required}
+  data-msg-email={d.emailInvalid}
+  data-msg-postal={d.postalInvalid}
 >
   <div class="subscribe-body">
     <form method="dialog" class="subscribe-close-row">
@@ -64,7 +75,24 @@ const btn =
 
       <section class="subscribe-step" data-step="2" hidden>
         <h2 class="subscribe-step-title" tabindex="-1">{t.steps.delivery}</h2>
-        <p class="text-[16px] text-muted-dark">{t.placeholder}</p>
+        {
+          fields.map((f) => (
+            <div class="subscribe-field">
+              <label for={`sub-${f.name}`}>{f.label}</label>
+              <input
+                id={`sub-${f.name}`}
+                name={f.name}
+                type={f.type}
+                autocomplete={f.autocomplete}
+                maxlength={f.name === 'postal' ? 10 : 120}
+                required
+                data-field
+                aria-describedby={`sub-${f.name}-error`}
+              />
+              <p id={`sub-${f.name}-error`} class="subscribe-error" hidden />
+            </div>
+          ))
+        }
       </section>
 
       <section class="subscribe-step" data-step="3" hidden>
@@ -141,11 +169,56 @@ const btn =
 
     const picked = (name: string) => !!form.querySelector(`input[name="${name}"]:checked`);
 
+    // Paso 2: validación propia (el formulario lleva `novalidate`). Mensaje bajo el campo con
+    // aria-invalid + aria-describedby; solo se valida un campo tras tocarlo o al pulsar «Siguiente».
+    const msgs = {
+      required: dialog.dataset.msgRequired ?? '',
+      email: dialog.dataset.msgEmail ?? '',
+      postal: dialog.dataset.msgPostal ?? '',
+    };
+    const fieldEls = Array.from(form.querySelectorAll<HTMLInputElement>('[data-field]'));
+
+    const messageFor = (input: HTMLInputElement) => {
+      const v = input.value.trim();
+      if (!v) return msgs.required;
+      if (input.name === 'email' && !/^[^\s@]+@[^\s@.]+(\.[^\s@.]+)+$/.test(v)) return msgs.email;
+      if (input.name === 'postal' && !/^[A-Za-z0-9][A-Za-z0-9 -]{2,8}[A-Za-z0-9]$/.test(v)) return msgs.postal;
+      return '';
+    };
+    const validate = (input: HTMLInputElement) => {
+      const msg = messageFor(input);
+      const out = form.querySelector<HTMLElement>(`#${input.id}-error`)!;
+      out.textContent = msg;
+      out.hidden = !msg;
+      if (msg) input.setAttribute('aria-invalid', 'true');
+      else input.removeAttribute('aria-invalid');
+      return !msg;
+    };
+    fieldEls.forEach((input) => {
+      input.addEventListener('blur', () => {
+        input.dataset.touched = 'true';
+        validate(input);
+      });
+      input.addEventListener('input', () => {
+        if (input.dataset.touched) validate(input);
+      });
+    });
+
     next.addEventListener('click', () => {
       if (current === 1 && !(picked('coffee') && picked('grind'))) {
         error.hidden = false;
         form.querySelector<HTMLInputElement>(`input[name="${picked('coffee') ? 'grind' : 'coffee'}"]`)?.focus();
         return;
+      }
+      if (current === 2) {
+        const invalid = fieldEls.filter((input) => {
+          input.dataset.touched = 'true';
+          return !validate(input);
+        });
+        if (invalid.length) {
+          invalid[0].focus();
+          return;
+        }
       }
       if (current < total) showStep(current + 1);
     });

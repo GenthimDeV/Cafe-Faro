@@ -568,6 +568,37 @@
   font-weight: 600;
   color: #ff9d8a;
 }
+.subscribe-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+.subscribe-field label {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-muted-dark);
+}
+.subscribe-field input {
+  min-height: 48px;
+  width: 100%;
+  border: 1px solid var(--color-line-dark);
+  border-radius: 1rem;
+  background: transparent;
+  padding: 0 1rem;
+  font: inherit;
+  font-weight: 600;
+  color: var(--color-salt);
+}
+.subscribe-field input:hover {
+  border-color: var(--color-muted-dark);
+}
+.subscribe-field input:focus-visible {
+  outline: 2px solid var(--color-beam);
+  outline-offset: 2px;
+}
+.subscribe-field input[aria-invalid='true'] {
+  border-color: #ff9d8a;
+}
 .subscribe-nav {
   display: flex;
   flex-wrap: wrap;
