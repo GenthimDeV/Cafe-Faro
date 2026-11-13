@@ -599,6 +599,46 @@
 .subscribe-field input[aria-invalid='true'] {
   border-color: #ff9d8a;
 }
+.subscribe-summary {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+.subscribe-summary > div {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.125rem 1rem;
+  border-bottom: 1px solid var(--color-line-dark);
+  padding: 0.75rem 0;
+}
+.subscribe-summary dt {
+  grid-column: 1 / -1;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-muted-dark);
+}
+.subscribe-summary dd {
+  margin: 0;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.subscribe-edit {
+  grid-row: 2;
+  grid-column: 2;
+  align-self: center;
+  min-height: 44px;
+  padding: 0 0.5rem;
+  font-weight: 700;
+  color: var(--color-beam);
+  text-decoration: underline;
+}
+.subscribe-edit:focus-visible {
+  outline: 2px solid var(--color-beam);
+  outline-offset: 2px;
+}
+.subscribe-nav[hidden] {
+  display: none;
+}
 .subscribe-nav {
   display: flex;
   flex-wrap: wrap;

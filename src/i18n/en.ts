@@ -201,7 +201,22 @@ export const en: Dictionary = {
       emailInvalid: 'Enter a valid email, for example name@mail.com.',
       postalInvalid: 'The postal code must be 4 to 10 letters or numbers.',
     },
-    placeholder: 'This step will be available very soon.',
+    summary: {
+      coffee: 'Coffee',
+      grind: 'Grind',
+      delivery: 'Delivery',
+      price: 'Price',
+      priceValue: `${priceLabel} a month`,
+      edit: 'Edit',
+      editCoffee: 'Edit coffee and grind',
+      editDelivery: 'Edit delivery details',
+      confirm: 'Confirm subscription',
+    },
+    done: {
+      title: 'Thank you, {name}!',
+      text: 'Your Faro subscription is ready… in this demo.',
+      demo: 'This is a simulation: no payment has been taken and no data has been saved.',
+    },
   },
   footer: {
     label: 'Footer',

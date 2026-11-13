@@ -97,15 +97,53 @@ const btn =
 
       <section class="subscribe-step" data-step="3" hidden>
         <h2 class="subscribe-step-title" tabindex="-1">{t.steps.summary}</h2>
-        <p class="text-[16px] text-muted-dark">{t.placeholder}</p>
+        <dl class="subscribe-summary">
+          <div>
+            <dt>{t.summary.coffee}</dt>
+            <dd id="sum-coffee"></dd>
+          </div>
+          <div>
+            <dt>{t.summary.grind}</dt>
+            <dd id="sum-grind"></dd>
+            <button type="button" class="subscribe-edit" data-goto="1" aria-label={t.summary.editCoffee}>
+              {t.summary.edit}
+            </button>
+          </div>
+          <div>
+            <dt>{t.summary.delivery}</dt>
+            <dd id="sum-delivery"></dd>
+            <button type="button" class="subscribe-edit" data-goto="2" aria-label={t.summary.editDelivery}>
+              {t.summary.edit}
+            </button>
+          </div>
+          <div>
+            <dt>{t.summary.price}</dt>
+            <dd class="font-mono text-beam">{t.summary.priceValue}</dd>
+          </div>
+        </dl>
+        <p class="text-[14px] text-muted-dark">{t.demo}</p>
       </section>
 
-      <div class="subscribe-nav">
+      <section class="subscribe-step" data-step="4" hidden>
+        <h2 id="subscribe-done-title" class="subscribe-step-title" tabindex="-1" data-tpl={t.done.title}></h2>
+        <p class="text-[16px] text-salt">{t.done.text}</p>
+        <p class="text-[14px] text-muted-dark">{t.done.demo}</p>
+        <div class="subscribe-nav">
+          <button type="button" id="subscribe-done-close" class={`btn-cta ${btn} bg-beam text-night`}>
+            {t.close}
+          </button>
+        </div>
+      </section>
+
+      <div class="subscribe-nav" id="subscribe-nav">
         <button type="button" id="subscribe-back" class={`${btn} border border-line-dark text-salt`} hidden>
           {t.back}
         </button>
         <button type="button" id="subscribe-next" class={`btn-cta ${btn} bg-beam text-night`}>
           {t.next}
+        </button>
+        <button type="button" id="subscribe-confirm" class={`btn-cta ${btn} bg-beam text-night`} hidden>
+          {t.summary.confirm}
         </button>
       </div>
     </form>
@@ -126,7 +164,10 @@ const btn =
         const trigger = (e.target as Element).closest('[data-subscribe]');
         if (!trigger) return;
         e.preventDefault();
-        if (!dialog.open) dialog.showModal();
+        if (!dialog.open) {
+          dialog.dispatchEvent(new Event('open-subscribe'));
+          dialog.showModal();
+        }
       },
       true,
     );
@@ -157,14 +198,34 @@ const btn =
     const error = dialog.querySelector<HTMLElement>('#subscribe-error')!;
     let current = 1;
 
-    const showStep = (n: number) => {
+    const confirmBtn = dialog.querySelector<HTMLButtonElement>('#subscribe-confirm')!;
+    const nav = dialog.querySelector<HTMLElement>('#subscribe-nav')!;
+    const doneTitle = dialog.querySelector<HTMLElement>('#subscribe-done-title')!;
+    const done = total + 1; // pantalla de confirmación: fuera del indicador «Paso X de 3»
+
+    const showStep = (n: number, focus = true) => {
       current = n;
       steps.forEach((s) => (s.hidden = Number(s.dataset.step) !== n));
-      progress.textContent = progressTpl.replace('{n}', String(n)).replace('{total}', String(total));
+      progress.hidden = n === done;
+      nav.hidden = n === done;
+      if (n !== done) progress.textContent = progressTpl.replace('{n}', String(n)).replace('{total}', String(total));
       back.hidden = n === 1;
-      next.hidden = n === total;
+      next.hidden = n >= total;
+      confirmBtn.hidden = n !== total;
       error.hidden = true;
-      steps[n - 1].querySelector<HTMLElement>('.subscribe-step-title')?.focus();
+      if (focus) steps[n - 1].querySelector<HTMLElement>('.subscribe-step-title')?.focus();
+    };
+
+    // Resumen (paso 3): todo se pinta con textContent, nunca como HTML.
+    const checkedValue = (name: string) =>
+      form.querySelector<HTMLInputElement>(`input[name="${name}"]:checked`)?.value ?? '';
+    const fieldValue = (name: string) => form.querySelector<HTMLInputElement>(`[name="${name}"]`)?.value.trim() ?? '';
+    const fillSummary = () => {
+      dialog.querySelector('#sum-coffee')!.textContent = checkedValue('coffee');
+      dialog.querySelector('#sum-grind')!.textContent = checkedValue('grind');
+      const place = `${fieldValue('postal')} ${fieldValue('city')}`;
+      dialog.querySelector('#sum-delivery')!.textContent =
+        `${fieldValue('name')} · ${fieldValue('email')} · ${fieldValue('address')}, ${place}`;
     };
 
     const picked = (name: string) => !!form.querySelector(`input[name="${name}"]:checked`);
@@ -220,11 +281,45 @@ const btn =
           return;
         }
       }
-      if (current < total) showStep(current + 1);
+      if (current < total) {
+        if (current + 1 === total) fillSummary();
+        showStep(current + 1);
+      }
     });
     back.addEventListener('click', () => {
       if (current > 1) showStep(current - 1);
     });
+    dialog.querySelectorAll<HTMLElement>('[data-goto]').forEach((b) =>
+      b.addEventListener('click', () => showStep(Number(b.dataset.goto))),
+    );
+    confirmBtn.addEventListener('click', () => {
+      doneTitle.textContent = (doneTitle.dataset.tpl ?? '').replace('{name}', fieldValue('name'));
+      showStep(done);
+    });
+    dialog.querySelector('#subscribe-done-close')!.addEventListener('click', () => dialog.close());
+
+    // Al cerrar (Esc, X, fondo, Cerrar) se descarta todo y el flujo vuelve al paso 1.
+    // El reinicio espera a que acabe la animación de salida; si no, el paso 1 se vería mientras
+    // el diálogo se desvanece. Al abrir se reinicia también, por si se reabre antes de que acabe.
+    const reset = () => {
+      form.reset();
+      fieldEls.forEach((input) => {
+        delete input.dataset.touched;
+        input.removeAttribute('aria-invalid');
+        const out = form.querySelector<HTMLElement>(`#${input.id}-error`)!;
+        out.textContent = '';
+        out.hidden = true;
+      });
+      doneTitle.textContent = '';
+      showStep(1, false);
+    };
+    dialog.addEventListener('close', () => {
+      // 0,25 s de transición en CSS + margen
+      setTimeout(() => {
+        if (!dialog.open) reset();
+      }, 350);
+    });
+    dialog.addEventListener('open-subscribe', reset);
     form.addEventListener('change', () => {
       if (picked('coffee') && picked('grind')) error.hidden = true;
     });

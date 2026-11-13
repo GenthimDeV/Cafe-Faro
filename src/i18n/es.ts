@@ -106,7 +106,18 @@ export type Dictionary = {
       emailInvalid: string;
       postalInvalid: string;
     };
-    placeholder: string;
+    summary: {
+      coffee: string;
+      grind: string;
+      delivery: string;
+      price: string;
+      priceValue: string;
+      edit: string;
+      editCoffee: string;
+      editDelivery: string;
+      confirm: string;
+    };
+    done: { title: string; text: string; demo: string };
   };
   footer: {
     label: string;
@@ -317,7 +328,22 @@ export const es: Dictionary = {
       emailInvalid: 'Escribe un correo válido, por ejemplo nombre@correo.com.',
       postalInvalid: 'El código postal debe tener entre 4 y 10 letras o números.',
     },
-    placeholder: 'Este paso estará disponible muy pronto.',
+    summary: {
+      coffee: 'Café',
+      grind: 'Molienda',
+      delivery: 'Entrega',
+      price: 'Precio',
+      priceValue: `${priceLabel} al mes`,
+      edit: 'Editar',
+      editCoffee: 'Editar café y molienda',
+      editDelivery: 'Editar datos de entrega',
+      confirm: 'Confirmar suscripción',
+    },
+    done: {
+      title: '¡Gracias, {name}!',
+      text: 'Tu suscripción Faro está lista… en esta demo.',
+      demo: 'Es una simulación: no se ha realizado ningún cobro ni se ha guardado ningún dato.',
+    },
   },
   footer: {
     label: 'Pie de página',
