@@ -83,6 +83,14 @@ export type Dictionary = {
     cta: string;
     demo: string;
   };
+  subscribe: {
+    title: string;
+    intro: string;
+    priceNote: string;
+    demo: string;
+    close: string;
+    closeLabel: string;
+  };
   footer: {
     label: string;
     brand: string;
@@ -268,6 +276,15 @@ export const es: Dictionary = {
     text: 'Suscríbete hoy y recibe el lote de diciembre recién tostado.',
     cta: `Suscribirme por ${priceLabel}/mes`,
     demo: 'Demo: este botón no realiza cobros ni guarda datos.',
+  },
+  subscribe: {
+    title: 'Suscripción Faro',
+    intro:
+      'Pronto podrás elegir tu café y tu molienda y dejar tus datos de entrega aquí mismo.',
+    priceNote: `${priceLabel} al mes · 250 g de café recién tostado`,
+    demo: 'Demo: no se realiza ningún cobro ni se guardan datos.',
+    close: 'Cerrar',
+    closeLabel: 'Cerrar el diálogo de suscripción',
   },
   footer: {
     label: 'Pie de página',

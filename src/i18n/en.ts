@@ -178,6 +178,15 @@ export const en: Dictionary = {
     cta: `Subscribe for ${priceLabel}/month`,
     demo: 'Demo: this button does not charge you or store any data.',
   },
+  subscribe: {
+    title: 'Faro subscription',
+    intro:
+      'Soon you will be able to pick your coffee and grind and leave your delivery details right here.',
+    priceNote: `${priceLabel} a month · 250 g of freshly roasted coffee`,
+    demo: 'Demo: no payment is taken and no data is saved.',
+    close: 'Close',
+    closeLabel: 'Close the subscription dialog',
+  },
   footer: {
     label: 'Footer',
     brand: 'FARO',

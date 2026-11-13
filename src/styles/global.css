@@ -434,6 +434,75 @@
   }
 }
 
+/* Diálogo de suscripción (9.1). Sin padding propio: un clic con destino el <dialog> es un clic en el fondo. */
+.subscribe-dialog {
+  margin: auto;
+  padding: 0;
+  width: min(calc(100% - 2rem), 30rem);
+  max-height: calc(100dvh - 2rem);
+  overflow-y: auto;
+  border: 1px solid var(--color-line-dark);
+  border-radius: 1.5rem;
+  background: var(--color-ink);
+  color: var(--color-salt);
+  box-shadow: 0 30px 80px rgb(0 0 0 / 0.5);
+}
+.subscribe-dialog::backdrop {
+  background: rgb(11 28 44 / 0.78);
+}
+.subscribe-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 1.25rem 2rem 2rem;
+}
+.subscribe-close-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: -0.75rem;
+}
+.subscribe-x {
+  display: inline-flex;
+  min-height: 44px;
+  min-width: 44px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  color: var(--color-muted-dark);
+  transition: color 0.2s;
+}
+.subscribe-x:hover {
+  color: var(--color-salt);
+}
+/* Bloquea el scroll de la página mientras el diálogo está abierto */
+html:has(.subscribe-dialog[open]) {
+  overflow: hidden;
+}
+.subscribe-dialog,
+.subscribe-dialog::backdrop {
+  transition:
+    opacity 0.25s,
+    transform 0.25s,
+    overlay 0.25s allow-discrete,
+    display 0.25s allow-discrete;
+}
+.subscribe-dialog:not([open]),
+.subscribe-dialog:not([open])::backdrop {
+  opacity: 0;
+}
+.subscribe-dialog:not([open]) {
+  transform: translateY(12px) scale(0.98);
+}
+@starting-style {
+  .subscribe-dialog[open],
+  .subscribe-dialog[open]::backdrop {
+    opacity: 0;
+  }
+  .subscribe-dialog[open] {
+    transform: translateY(12px) scale(0.98);
+  }
+}
+
 /* Reduced motion: ninguna animación ni transición se mueve (cubre todas las clases actuales y futuras). */
 @media (prefers-reduced-motion: reduce) {
   *,
