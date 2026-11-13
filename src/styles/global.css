@@ -639,6 +639,20 @@
 .subscribe-nav[hidden] {
   display: none;
 }
+/* Entrada suave al cambiar de paso (reduced-motion la anula con la regla global) */
+.subscribe-step:not([hidden]) {
+  animation: subscribe-step-in 0.3s ease-out;
+}
+@keyframes subscribe-step-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+#subscribe-confirm:disabled {
+  opacity: 0.7;
+  cursor: progress;
+}
 .subscribe-nav {
   display: flex;
   flex-wrap: wrap;

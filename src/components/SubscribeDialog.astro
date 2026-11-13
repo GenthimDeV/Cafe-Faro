@@ -31,6 +31,8 @@ const btn =
   data-msg-required={d.required}
   data-msg-email={d.emailInvalid}
   data-msg-postal={d.postalInvalid}
+  data-msg-confirm={t.summary.confirm}
+  data-msg-confirming={t.summary.confirming}
 >
   <div class="subscribe-body">
     <form method="dialog" class="subscribe-close-row">
@@ -292,9 +294,22 @@ const btn =
     dialog.querySelectorAll<HTMLElement>('[data-goto]').forEach((b) =>
       b.addEventListener('click', () => showStep(Number(b.dataset.goto))),
     );
+    // Carga simulada: el botón se bloquea ~0,9 s antes de mostrar la confirmación.
+    let loading: ReturnType<typeof setTimeout> | undefined;
+    const setLoading = (on: boolean) => {
+      confirmBtn.disabled = on;
+      confirmBtn.setAttribute('aria-busy', String(on));
+      confirmBtn.textContent = on ? (dialog.dataset.msgConfirming ?? '') : (dialog.dataset.msgConfirm ?? '');
+    };
     confirmBtn.addEventListener('click', () => {
-      doneTitle.textContent = (doneTitle.dataset.tpl ?? '').replace('{name}', fieldValue('name'));
-      showStep(done);
+      if (loading) return;
+      setLoading(true);
+      loading = setTimeout(() => {
+        loading = undefined;
+        setLoading(false);
+        doneTitle.textContent = (doneTitle.dataset.tpl ?? '').replace('{name}', fieldValue('name'));
+        showStep(done);
+      }, 900);
     });
     dialog.querySelector('#subscribe-done-close')!.addEventListener('click', () => dialog.close());
 
@@ -302,6 +317,9 @@ const btn =
     // El reinicio espera a que acabe la animación de salida; si no, el paso 1 se vería mientras
     // el diálogo se desvanece. Al abrir se reinicia también, por si se reabre antes de que acabe.
     const reset = () => {
+      clearTimeout(loading);
+      loading = undefined;
+      setLoading(false);
       form.reset();
       fieldEls.forEach((input) => {
         delete input.dataset.touched;

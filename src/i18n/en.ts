@@ -211,6 +211,7 @@ export const en: Dictionary = {
       editCoffee: 'Edit coffee and grind',
       editDelivery: 'Edit delivery details',
       confirm: 'Confirm subscription',
+      confirming: 'Confirming…',
     },
     done: {
       title: 'Thank you, {name}!',

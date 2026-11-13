@@ -116,6 +116,7 @@ export type Dictionary = {
       editCoffee: string;
       editDelivery: string;
       confirm: string;
+      confirming: string;
     };
     done: { title: string; text: string; demo: string };
   };
@@ -338,6 +339,7 @@ export const es: Dictionary = {
       editCoffee: 'Editar café y molienda',
       editDelivery: 'Editar datos de entrega',
       confirm: 'Confirmar suscripción',
+      confirming: 'Confirmando…',
     },
     done: {
       title: '¡Gracias, {name}!',
