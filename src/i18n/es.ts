@@ -181,7 +181,7 @@ export const es: Dictionary = {
       },
     ],
     grinds: ['Espresso', 'Moka', 'Filtro', 'Grano'],
-    roastStages: ['CARGA', '1.er CRACK', 'SALIDA'],
+    roastStages: ['GRANO VERDE', 'AROMA', 'TOSTADO'],
     roastLabel: 'Progreso del tueste: 72 %',
     transit: 'En camino · menos de 72 h desde el tueste',
   },

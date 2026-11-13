@@ -42,10 +42,10 @@ const profileKeys = ['acidity', 'body', 'sweetness'] as const;
       coffees.map((coffee, i) => {
         const item = t.items[i];
         return (
-          <li class="flex flex-col overflow-hidden rounded-[26px] border border-line bg-paper">
+          <li class="card-lift reveal flex flex-col rounded-[26px] border border-line bg-paper">
             <div
               aria-hidden="true"
-              class="relative flex h-[230px] items-end justify-center overflow-hidden"
+              class="relative flex h-[230px] items-end justify-center overflow-hidden rounded-t-[25px]"
               style={`background-color: ${coffee.color}`}
             >
               <span

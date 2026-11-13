@@ -90,7 +90,7 @@ export const en: Dictionary = {
       },
     ],
     grinds: ['Espresso', 'Moka pot', 'Filter', 'Whole bean'],
-    roastStages: ['CHARGE', '1ST CRACK', 'DROP'],
+    roastStages: ['GREEN BEAN', 'AROMA', 'ROASTED'],
     roastLabel: 'Roast progress: 72%',
     transit: 'On its way · under 72 h from roasting',
   },

@@ -62,7 +62,7 @@ const icons = [
     >
       {
         t.steps.map((step, i) => (
-          <li class="flex flex-col gap-[18px] rounded-3xl border border-line-dark bg-night p-[34px] max-md:p-6">
+          <li class="card-lift reveal flex flex-col gap-[18px] rounded-3xl border border-line-dark bg-night p-[34px] max-md:p-6">
             <div class="flex items-center justify-between">
               <span class="font-mono text-sm text-beam">
                 {t.stepLabel} {String(i + 1).padStart(2, '0')}
@@ -91,15 +91,11 @@ const icons = [
             <p class="text-base leading-[1.6] text-muted-dark">{step.text}</p>
 
             {i === 0 && (
-              <ul class="flex flex-wrap gap-1.5 text-xs font-semibold">
+              <ul class="pills flex flex-wrap gap-1.5 text-xs font-semibold">
                 {t.grinds.map((g, n) => (
                   <li
-                    class:list={[
-                      'rounded-full px-2.5 py-1.5',
-                      n === 0
-                        ? 'bg-salt text-night'
-                        : 'border border-line-dark text-muted-dark',
-                    ]}
+                    class="pill rounded-full border border-line-dark px-2.5 py-1.5 text-muted-dark"
+                    style={`--pill-delay: ${n * 2}s`}
                   >
                     {g}
                   </li>
@@ -122,7 +118,7 @@ const icons = [
                   aria-label={t.roastLabel}
                   class="h-1.5 overflow-hidden rounded-[3px] bg-deep"
                 >
-                  <div class="h-1.5 w-[72%] rounded-[3px] bg-beam" />
+                  <div class="roast-fill h-1.5 w-[72%] rounded-[3px] bg-beam" />
                 </div>
               </div>
             )}

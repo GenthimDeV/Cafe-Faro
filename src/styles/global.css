@@ -279,6 +279,161 @@
   }
 }
 
+/* Microinteracciones (8.2): solo transform/opacity/translate (compuestas).
+   El brillo y la sombra son pseudo-elementos cuya opacidad se anima, no box-shadow. */
+@layer components {
+  .btn-cta {
+    position: relative;
+    isolation: isolate;
+    transition: transform 0.2s ease;
+  }
+  .btn-cta::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    box-shadow: 0 10px 26px -6px rgb(242 169 59 / 0.6);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+  }
+  .btn-cta svg {
+    transition: transform 0.2s ease;
+  }
+  .btn-cta:active {
+    transform: translateY(0) scale(0.97);
+  }
+
+  .card-lift {
+    position: relative;
+    isolation: isolate;
+    transition: transform 0.25s ease;
+  }
+  .card-lift::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    box-shadow: 0 18px 34px -14px rgb(11 28 44 / 0.35);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    pointer-events: none;
+  }
+
+  /* Subrayado animado: línea ámbar que crece de izquierda a derecha */
+  .link-anim {
+    position: relative;
+  }
+  .link-anim::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0.65rem;
+    height: 2px;
+    background: var(--color-beam);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
+    pointer-events: none;
+  }
+  .link-anim.border-b::after {
+    bottom: -1px;
+  }
+}
+
+@media (hover: hover) {
+  .btn-cta:hover {
+    transform: translateY(-2px);
+  }
+  .btn-cta:hover::after {
+    opacity: 1;
+  }
+  .btn-cta:hover svg {
+    transform: translateX(4px);
+  }
+  .card-lift:hover {
+    transform: translateY(-6px);
+  }
+  .card-lift:hover::after {
+    opacity: 1;
+  }
+  .link-anim:hover::after {
+    transform: scaleX(1);
+  }
+}
+.btn-cta:focus-visible svg {
+  transform: translateX(4px);
+}
+.link-anim:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* Pastillas de molienda (paso 01): el resaltado recorre una a una (2 s cada una) */
+@keyframes pill-cycle {
+  0%, 22% { background-color: var(--color-salt); color: var(--color-night); border-color: var(--color-salt); }
+  28%, 100% { background-color: transparent; color: var(--color-muted-dark); border-color: var(--color-line-dark); }
+}
+@keyframes roast-fill {
+  0% { transform: scaleX(0.04); }
+  70%, 100% { transform: scaleX(1); }
+}
+.pill {
+  animation: pill-cycle 8s ease-in-out infinite;
+  animation-delay: var(--pill-delay, 0s);
+}
+.roast-fill {
+  transform-origin: left;
+  animation: roast-fill 5s ease-out infinite;
+}
+/* Sin movimiento: la primera pastilla queda resaltada de forma estática */
+@media (prefers-reduced-motion: reduce) {
+  .pills li:first-child {
+    background-color: var(--color-salt);
+    color: var(--color-night);
+    border-color: var(--color-salt);
+  }
+}
+
+/* Desplegables de la FAQ: apertura y cierre suaves (Chrome/Edge/Safari recientes;
+   en el resto se abren de golpe, sin perder funcionalidad). */
+:root {
+  interpolate-size: allow-keywords;
+}
+.faq-item::details-content {
+  block-size: 0;
+  overflow: clip;
+  opacity: 0;
+  transition: block-size 0.35s ease, opacity 0.3s ease, content-visibility 0.35s allow-discrete;
+}
+.faq-item[open]::details-content {
+  block-size: auto;
+  opacity: 1;
+}
+
+/* Revelado al hacer scroll: sin JS, solo donde hay animation-timeline. Usa `translate`
+   (no `transform`) para no pisar el levantado al hover. Sin soporte, todo es visible. */
+@keyframes reveal {
+  from {
+    opacity: 0;
+    translate: 0 28px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 45%;
+    }
+  }
+}
+
 /* Reduced motion: ninguna animación ni transición se mueve (cubre todas las clases actuales y futuras). */
 @media (prefers-reduced-motion: reduce) {
   *,
