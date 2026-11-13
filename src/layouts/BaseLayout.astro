@@ -65,5 +65,65 @@ const otherLocales = locales.filter((l) => l !== lang);
       <slot />
     </main>
     <slot name="footer" />
+    <script>
+      // URL limpia: los enlaces internos (#sección) hacen scroll suave y la URL queda sin `#`.
+      // Sin JS siguen funcionando como anclas normales. La sección actual se publica en
+      // `document.documentElement.dataset.section` (y el evento `section-change`) para que
+      // el selector de idioma pueda conservarla.
+      const root = document.documentElement;
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+      const setSection = (id: string) => {
+        if ((root.dataset.section ?? '') === id) return;
+        root.dataset.section = id;
+        document.dispatchEvent(new CustomEvent('section-change'));
+      };
+
+      // Sección visible al hacer scroll a mano: franja fina al ~35 % del viewport; la sección
+      // que la cruza es la actual (las que no tienen id, como el hero, la dejan vacía).
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const en of entries) if (en.isIntersecting) setSection(en.target.id);
+          },
+          { rootMargin: '-35% 0px -64% 0px' },
+        );
+        document.querySelectorAll('main section').forEach((s) => io.observe(s));
+      }
+      const cleanUrl = () => history.replaceState(history.state, '', location.pathname + location.search);
+      const targetOf = (hash: string) => {
+        const id = decodeURIComponent(hash.slice(1));
+        return id ? document.getElementById(id) : null;
+      };
+
+      // Llegada con ancla (p. ej. desde el selector de idioma): se hace el scroll a mano y
+      // después se limpia el `#`. Limpiarlo antes de que el navegador lo procese lo perdía
+      // y la página se quedaba arriba.
+      const arrive = () => {
+        const target = location.hash ? targetOf(location.hash) : null;
+        if (!target) return;
+        target.scrollIntoView({ behavior: 'auto', block: 'start' });
+        setSection(target.id);
+        cleanUrl();
+      };
+      if (document.readyState === 'complete') arrive();
+      else window.addEventListener('load', arrive, { once: true });
+
+      document.addEventListener('click', (e) => {
+        if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        const link = (e.target as Element).closest<HTMLAnchorElement>('a[href^="#"]');
+        if (!link) return;
+        const target = targetOf(link.getAttribute('href')!);
+        if (!target) return;
+        e.preventDefault();
+        target.scrollIntoView({ behavior: reduce.matches ? 'auto' : 'smooth', block: 'start' });
+        if (!target.hasAttribute('tabindex') && !/^(A|BUTTON|INPUT|SELECT|TEXTAREA|SUMMARY)$/.test(target.tagName)) {
+          target.setAttribute('tabindex', '-1');
+        }
+        target.focus({ preventScroll: true });
+        setSection(target.id);
+        cleanUrl();
+      });
+    </script>
   </body>
 </html>

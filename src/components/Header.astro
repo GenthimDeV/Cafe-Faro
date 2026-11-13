@@ -117,7 +117,7 @@ const links = [
   const links = list.querySelectorAll<HTMLAnchorElement>('a');
   const base = Array.from(links, (a) => a.getAttribute('href') ?? '');
   const sync = () => {
-    const id = decodeURIComponent(location.hash.slice(1));
+    const id = document.documentElement.dataset.section ?? decodeURIComponent(location.hash.slice(1));
     const key = Object.keys(map[current]).find((k) => map[current][k] === id);
     links.forEach((a, i) => {
       const target = a.getAttribute('hreflang') ?? current;
@@ -125,7 +125,7 @@ const links = [
     });
   };
   sync();
-  window.addEventListener('hashchange', sync);
+  document.addEventListener('section-change', sync);
 
   // Sólido mientras el hueco original de la cabecera sigue a la vista (detrás solo hay
   // fondo claro); semitransparente cuando ya hay contenido debajo.

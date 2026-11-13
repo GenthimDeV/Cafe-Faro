@@ -74,6 +74,12 @@
     box-shadow: 0 0 0 6px var(--color-night);
     border-radius: 2px;
   }
+
+  /* Destinos de enlaces internos con foco programático (8.1): sin aro, no son controles */
+  [tabindex='-1']:focus {
+    outline: none;
+    box-shadow: none;
+  }
 }
 
 /* Escena del faro (tarea 3.1): solo CSS. */
