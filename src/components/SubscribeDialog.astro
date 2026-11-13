@@ -3,16 +3,23 @@ import type { Dictionary } from '../i18n/es';
 
 interface Props {
   t: Dictionary['subscribe'];
+  coffees: string[];
+  grinds: string[];
 }
 
-const { t } = Astro.props;
+const { t, coffees, grinds } = Astro.props;
+const total = 3;
+const progress = (n: number) => t.progress.replace('{n}', String(n)).replace('{total}', String(total));
+const btn =
+  'inline-flex min-h-[52px] items-center justify-center rounded-full px-7 text-[16px] font-bold';
 ---
 
 <dialog
   id="subscribe-dialog"
   class="subscribe-dialog"
-  aria-labelledby="subscribe-title"
-  aria-describedby="subscribe-desc"
+  aria-label={t.title}
+  data-progress={t.progress}
+  data-total={total}
 >
   <div class="subscribe-body">
     <form method="dialog" class="subscribe-close-row">
@@ -22,21 +29,57 @@ const { t } = Astro.props;
         </svg>
       </button>
     </form>
-    <h2 id="subscribe-title" class="text-[34px] font-extrabold leading-[1] tracking-[-0.03em]">
-      {t.title}
-    </h2>
-    <div id="subscribe-desc" class="flex flex-col gap-4">
-      <p class="text-[17px] leading-[1.6] text-muted-dark">{t.intro}</p>
-      <p class="font-mono text-[14px] text-salt">{t.priceNote}</p>
-      <p class="text-[14px] text-muted-dark">{t.demo}</p>
-    </div>
-    <form method="dialog">
-      <button
-        type="submit"
-        class="btn-cta inline-flex min-h-[52px] items-center justify-center rounded-full bg-beam px-7 text-[16px] font-bold text-night"
-      >
-        {t.close}
-      </button>
+
+    <p id="subscribe-progress" class="font-mono text-[14px] text-beam">{progress(1)}</p>
+
+    <form id="subscribe-form" class="subscribe-steps" novalidate>
+      <section class="subscribe-step" data-step="1">
+        <h2 class="subscribe-step-title" tabindex="-1">{t.steps.coffee}</h2>
+        <fieldset class="subscribe-fieldset">
+          <legend>{t.coffeeLegend}</legend>
+          {
+            coffees.map((name) => (
+              <label class="subscribe-choice">
+                <input type="radio" name="coffee" value={name} />
+                <span>{name}</span>
+              </label>
+            ))
+          }
+        </fieldset>
+        <fieldset class="subscribe-fieldset subscribe-fieldset-pills">
+          <legend>{t.grindLegend}</legend>
+          {
+            grinds.map((name) => (
+              <label class="subscribe-choice">
+                <input type="radio" name="grind" value={name} />
+                <span>{name}</span>
+              </label>
+            ))
+          }
+        </fieldset>
+        <p id="subscribe-error" class="subscribe-error" role="alert" hidden>{t.choiceError}</p>
+        <p class="font-mono text-[14px] text-salt">{t.priceNote}</p>
+        <p class="text-[14px] text-muted-dark">{t.demo}</p>
+      </section>
+
+      <section class="subscribe-step" data-step="2" hidden>
+        <h2 class="subscribe-step-title" tabindex="-1">{t.steps.delivery}</h2>
+        <p class="text-[16px] text-muted-dark">{t.placeholder}</p>
+      </section>
+
+      <section class="subscribe-step" data-step="3" hidden>
+        <h2 class="subscribe-step-title" tabindex="-1">{t.steps.summary}</h2>
+        <p class="text-[16px] text-muted-dark">{t.placeholder}</p>
+      </section>
+
+      <div class="subscribe-nav">
+        <button type="button" id="subscribe-back" class={`${btn} border border-line-dark text-salt`} hidden>
+          {t.back}
+        </button>
+        <button type="button" id="subscribe-next" class={`btn-cta ${btn} bg-beam text-night`}>
+          {t.next}
+        </button>
+      </div>
     </form>
   </div>
 </dialog>
@@ -65,5 +108,54 @@ const { t } = Astro.props;
     dialog.addEventListener('click', (e) => {
       if (e.target === dialog) dialog.close();
     });
+
+    // Esc cierra siempre. El cierre nativo (evento `cancel`) no es fiable en todos los casos
+    // (p. ej. Chrome lo ignora si no hubo interacción tras abrir), así que se gestiona a mano.
+    dialog.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      e.preventDefault();
+      dialog.close();
+    });
+
+    // Flujo de pasos: todos los pasos están en el HTML y se alternan con `hidden`. El estado
+    // (café, molienda, paso actual) vive solo en el DOM, en memoria.
+    const total = Number(dialog.dataset.total);
+    const progressTpl = dialog.dataset.progress ?? '';
+    const form = dialog.querySelector<HTMLFormElement>('#subscribe-form')!;
+    const steps = Array.from(dialog.querySelectorAll<HTMLElement>('.subscribe-step'));
+    const progress = dialog.querySelector<HTMLElement>('#subscribe-progress')!;
+    const back = dialog.querySelector<HTMLButtonElement>('#subscribe-back')!;
+    const next = dialog.querySelector<HTMLButtonElement>('#subscribe-next')!;
+    const error = dialog.querySelector<HTMLElement>('#subscribe-error')!;
+    let current = 1;
+
+    const showStep = (n: number) => {
+      current = n;
+      steps.forEach((s) => (s.hidden = Number(s.dataset.step) !== n));
+      progress.textContent = progressTpl.replace('{n}', String(n)).replace('{total}', String(total));
+      back.hidden = n === 1;
+      next.hidden = n === total;
+      error.hidden = true;
+      steps[n - 1].querySelector<HTMLElement>('.subscribe-step-title')?.focus();
+    };
+
+    const picked = (name: string) => !!form.querySelector(`input[name="${name}"]:checked`);
+
+    next.addEventListener('click', () => {
+      if (current === 1 && !(picked('coffee') && picked('grind'))) {
+        error.hidden = false;
+        form.querySelector<HTMLInputElement>(`input[name="${picked('coffee') ? 'grind' : 'coffee'}"]`)?.focus();
+        return;
+      }
+      if (current < total) showStep(current + 1);
+    });
+    back.addEventListener('click', () => {
+      if (current > 1) showStep(current - 1);
+    });
+    form.addEventListener('change', () => {
+      if (picked('coffee') && picked('grind')) error.hidden = true;
+    });
+    // Enter dentro del formulario no debe enviarlo ni recargar la página
+    form.addEventListener('submit', (e) => e.preventDefault());
   }
 </script>

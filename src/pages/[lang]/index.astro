@@ -37,6 +37,10 @@ const t = useTranslations(lang);
   <Plan t={t.plan} lang={lang} />
   <Faq t={t.faq} lang={lang} />
   <FinalCta t={t.finalCta} lang={lang} />
-  <SubscribeDialog t={t.subscribe} />
+  <SubscribeDialog
+    t={t.subscribe}
+    coffees={t.coffees.items.map((c) => c.name)}
+    grinds={t.how.grinds}
+  />
   <Footer slot="footer" t={t.footer} />
 </BaseLayout>

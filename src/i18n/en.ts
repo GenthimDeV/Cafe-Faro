@@ -180,12 +180,18 @@ export const en: Dictionary = {
   },
   subscribe: {
     title: 'Faro subscription',
-    intro:
-      'Soon you will be able to pick your coffee and grind and leave your delivery details right here.',
     priceNote: `${priceLabel} a month · 250 g of freshly roasted coffee`,
     demo: 'Demo: no payment is taken and no data is saved.',
     close: 'Close',
     closeLabel: 'Close the subscription dialog',
+    progress: 'Step {n} of {total}',
+    steps: { coffee: 'Your coffee', delivery: 'Delivery details', summary: 'Summary' },
+    coffeeLegend: 'Choose your coffee',
+    grindLegend: 'Choose your grind',
+    back: 'Back',
+    next: 'Next',
+    choiceError: 'Choose a coffee and a grind to continue.',
+    placeholder: 'This step will be available very soon.',
   },
   footer: {
     label: 'Footer',

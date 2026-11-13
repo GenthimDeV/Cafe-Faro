@@ -85,11 +85,18 @@ export type Dictionary = {
   };
   subscribe: {
     title: string;
-    intro: string;
     priceNote: string;
     demo: string;
     close: string;
     closeLabel: string;
+    progress: string;
+    steps: { coffee: string; delivery: string; summary: string };
+    coffeeLegend: string;
+    grindLegend: string;
+    back: string;
+    next: string;
+    choiceError: string;
+    placeholder: string;
   };
   footer: {
     label: string;
@@ -279,12 +286,18 @@ export const es: Dictionary = {
   },
   subscribe: {
     title: 'Suscripción Faro',
-    intro:
-      'Pronto podrás elegir tu café y tu molienda y dejar tus datos de entrega aquí mismo.',
     priceNote: `${priceLabel} al mes · 250 g de café recién tostado`,
     demo: 'Demo: no se realiza ningún cobro ni se guardan datos.',
     close: 'Cerrar',
     closeLabel: 'Cerrar el diálogo de suscripción',
+    progress: 'Paso {n} de {total}',
+    steps: { coffee: 'Tu café', delivery: 'Datos de entrega', summary: 'Resumen' },
+    coffeeLegend: 'Elige tu café',
+    grindLegend: 'Elige tu molienda',
+    back: 'Atrás',
+    next: 'Siguiente',
+    choiceError: 'Elige un café y una molienda para continuar.',
+    placeholder: 'Este paso estará disponible muy pronto.',
   },
   footer: {
     label: 'Pie de página',
