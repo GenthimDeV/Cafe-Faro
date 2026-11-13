@@ -13,13 +13,14 @@ Landing page de una marca ficticia de café de especialidad con suscripción men
 
 </details>
 
-> Es una demo: el botón de suscripción no cobra nada ni guarda datos.
+> Es una demo: el flujo de suscripción es una simulación en el navegador; no cobra nada ni guarda datos.
 
 ## Qué demuestra
 
 - **Sistema de diseño propio:** tokens de marca en `@theme` de Tailwind, tipografía y paleta coherentes.
 - **Ilustración solo con CSS y SVG:** el faro, el mar, las estrellas, el haz de luz y las bolsas de café no usan imágenes.
-- **Cero JavaScript propio en el cliente:** las animaciones son CSS y `prefers-reduced-motion` las desactiva todas.
+- **JavaScript mínimo y sin dependencias:** solo para la URL limpia (scroll suave sin `#`) y el flujo de suscripción. Las animaciones son CSS y `prefers-reduced-motion` las desactiva todas.
+- **Flujo de suscripción simulado y accesible:** `<dialog>` modal nativo con tres pasos (café y molienda, datos de entrega, resumen), validación propia con errores accesibles, confirmación con aviso de demo y reinicio al cerrar. No hay backend ni se guardan datos.
 - **i18n real:** rutas `/es/` y `/en/` con textos nativos en cada idioma, no traducidos de forma literal.
 - **SEO:** canonical, `hreflang`, Open Graph y Twitter por idioma, `sitemap.xml` y `robots.txt`.
 - **Rendimiento y accesibilidad:** fuentes autoalojadas, CSS en línea, contraste AA y objetivos táctiles de 44 px.
@@ -28,7 +29,9 @@ Landing page de una marca ficticia de café de especialidad con suscripción men
 
 | Decisión | Motivo |
 | --- | --- |
-| **Astro con salida estática** | La página no necesita interactividad: se entrega HTML y CSS ya generados. |
+| **Astro con salida estática** | Casi toda la página es contenido: se entrega HTML y CSS ya generados, con un poco de JS vanilla solo donde hace falta. |
+| **`<dialog>` nativo para la suscripción** | Da foco atrapado, Esc y modalidad sin librerías; los pasos están todos en el HTML y se alternan con `hidden`. |
+| **Scroll suave con `history.replaceState`** | La URL se queda en `/es/` o `/en/` sin `#`, sin crear páginas por sección. Sin JS, los enlaces de ancla siguen funcionando. |
 | **TypeScript estricto** | Los textos de cada idioma se validan con `satisfies`, así que una clave que falte en `en.ts` rompe `pnpm check`. |
 | **Tailwind CSS v4** (`@tailwindcss/vite`) | Los tokens viven en un único sitio, `src/styles/global.css`. |
 | **Fuentes con Fontsource** | Se sirven desde el propio dominio, sin depender de Google Fonts, y solo con el subconjunto latino. |
